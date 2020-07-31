@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "hazellib",
+  "version": "${version}",
+  "name": "HazelLib",
+  "description": "Core module to HazelTrinity's mods.",
+  "authors": [
+    "HazelTrinity"
+  ],
+  "contributors": [],
+  "contact": {
+    "homepage": "http://hazeltrinity.com"
+  },
+  "license": "MIT",
+  "icon": "assets/hazellib/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [],
+    "client": [],
+    "server": []
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.9.0"
+  }
+}
