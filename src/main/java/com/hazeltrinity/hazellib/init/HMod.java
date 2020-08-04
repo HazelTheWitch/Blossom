@@ -1,16 +1,17 @@
 package com.hazeltrinity.hazellib.init;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.util.Identifier;
 
-/**
- * Subclass and implement `of` method with mod name and id.
- */
 public class HMod {
-    private static HMod MOD;
+
+    private List<HInitializable> initializables;
 
     private static Logger LOGGER = LogManager.getLogger();
 
@@ -20,32 +21,36 @@ public class HMod {
     protected HMod(String name, String id) {
         this.name = name;
         this.id = id;
+
+        initializables = new ArrayList<HInitializable>();
     }
 
-    // SINGLETON
+    // REGISTRATION
 
-    public static HMod of() {
-        return new HMod(null, null);
-    }
-
-    public static HMod getMod() {
-        if (MOD == null) {
-            MOD = of();
-        }
-
-        return MOD;
+    public HInitializable register(HInitializable initializable) {
+        initializables.add(initializable);
+        initializable.setMod(this);
+        return initializable;
     }
 
     // INITIALIZATION
 
     public void onInitialize() {
         info("+++ Initializing Main +++");
+
+        for (HInitializable initializable : initializables) {
+            initializable.onInitialize();
+        }
         
         info("--- Initializing Main ---");
     }
 
     public void onInitializeClient() {
         info("+++ Initializing Client +++");
+
+        for (HInitializable initializable : initializables) {
+            initializable.onInitializeClient();
+        }
 
         info("--- Initializing Client ---");
         
@@ -54,12 +59,20 @@ public class HMod {
     public void onInitializeServer() {
         info("+++ Initializing Server +++");
 
+        for (HInitializable initializable : initializables) {
+            initializable.onInitializeServer();
+        }
+
         info("--- Initializing Server ---");
         
     }
 
     public void onPreLaunch() {
         info("+++ Pre-Launching +++");
+
+        for (HInitializable initializable : initializables) {
+            initializable.onPreLaunch();
+        }
         
         info("--- Pre-Launching ---");
     }
