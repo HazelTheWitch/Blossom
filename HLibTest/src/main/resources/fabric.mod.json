@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "hlibtest",
+  "version": "${version}",
+  "name": "HazelLib Test Mod",
+  "description": "Hazel Lib testing mod.",
+  "authors": [
+    "HazelTrinity"
+  ],
+  "contributors": [],
+  "contact": {
+    "homepage": "http://hazeltrinity.com"
+  },
+  "license": "MIT",
+  "icon": "assets/hlibtest/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.hazeltrinity.hlibtest.HLibTestMod"
+    ],
+    "client": [],
+    "server": []
+  },
+  "mixins": [],
+  "depends": {
+    "fabricloader": ">=0.9.0"
+  }
+}

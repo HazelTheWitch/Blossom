@@ -1,14 +1,13 @@
 plugins {
-	id 'fabric-loom' version '0.5-SNAPSHOT'
-	id 'maven-publish'
+	id 'fabric-loom'
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
-archivesBaseName = project.archives_base_name
-version = "$project.mod_version+$project.minecraft_version"
-group = project.maven_group
+archivesBaseName = "HLibTest"
+version = rootProject.version
+group = rootProject.group
 
 minecraft {
 }
@@ -19,9 +18,7 @@ dependencies {
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	include "com.googlecode.json-simple:json-simple:${project.json_simple_version}"
-
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
+	implementation project(":")
 }
 
 processResources {
