@@ -17,7 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class HGroup implements HInitializable {
+public class HGroup extends HInitializable {
     public final String name;
 
     private HMod mod;

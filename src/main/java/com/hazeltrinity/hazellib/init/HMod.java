@@ -18,7 +18,7 @@ public class HMod {
     public final String name;
     public final String id;
 
-    protected HMod(String name, String id) {
+    public HMod(String name, String id) {
         this.name = name;
         this.id = id;
 
