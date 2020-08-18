@@ -41,8 +41,6 @@ public class HMod {
         for (HInitializable initializable : initializables) {
             initializable.onInitialize();
         }
-        
-        info("--- Initializing Main ---");
     }
 
     public void onInitializeClient() {
@@ -51,9 +49,6 @@ public class HMod {
         for (HInitializable initializable : initializables) {
             initializable.onInitializeClient();
         }
-
-        info("--- Initializing Client ---");
-        
     }
 
     public void onInitializeServer() {
@@ -62,8 +57,6 @@ public class HMod {
         for (HInitializable initializable : initializables) {
             initializable.onInitializeServer();
         }
-
-        info("--- Initializing Server ---");
         
     }
 
@@ -73,8 +66,6 @@ public class HMod {
         for (HInitializable initializable : initializables) {
             initializable.onPreLaunch();
         }
-        
-        info("--- Pre-Launching ---");
     }
 
     // HELPER METHODS
