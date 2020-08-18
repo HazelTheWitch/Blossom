@@ -79,7 +79,7 @@ public class HMod {
 
     // HELPER METHODS
 
-    public Identifier idOf(String name) {
+    public Identifier id(String name) {
         return new Identifier(id, name);
     }
 

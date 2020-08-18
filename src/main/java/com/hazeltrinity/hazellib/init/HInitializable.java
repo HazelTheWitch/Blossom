@@ -17,7 +17,7 @@ public abstract class HInitializable {
     }
 
     /**
-     * Called <b>asynchronously</b> during initialization. Do not count on one being called before the other.
+     * Client/Server is called <b>asynchronously</b> during initialization. Do not count on one being called before the other.
      */
     public void onInitialize() {}
     public void onInitializeClient() {}

@@ -10,6 +10,10 @@ archivesBaseName = project.archives_base_name
 version = "$project.mod_version+$project.minecraft_version"
 group = project.maven_group
 
+repositories {
+    mavenCentral()
+}
+
 minecraft {
 }
 
@@ -18,8 +22,8 @@ dependencies {
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-	include "com.googlecode.json-simple:json-simple:${project.json_simple_version}"
+	// https://mvnrepository.com/artifact/org.ini4j/ini4j
+	compile group: 'org.ini4j', name: 'ini4j', version: '0.5.1'
 
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 }

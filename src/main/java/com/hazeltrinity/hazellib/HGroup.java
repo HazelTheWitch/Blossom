@@ -135,7 +135,9 @@ public class HGroup extends HInitializable {
 
     @Override
     public void onInitializeClient() {
-        BlockRenderLayerMap.INSTANCE.putBlock(block, renderLayer);
+        if (renderLayer != null) {
+            BlockRenderLayerMap.INSTANCE.putBlock(block, renderLayer);
+        }
     }
 
     @Override
