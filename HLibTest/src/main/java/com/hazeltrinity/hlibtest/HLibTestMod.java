@@ -8,8 +8,7 @@ public class HLibTestMod extends HModInitializer {
 
 	public static final HMod MOD = new HMod("HazelLib Test Mod", "hlibtest");
 	
-	public static final HGroup TestClientScreen = MOD
-			.register(new HGroup("test_client").setItem(new TestItem()));
+	public static final HGroup TestClientScreen = MOD.register(new HGroup("test_client").setItem(new TestItem()));
 
 	@Override
 	public HMod getMod() {
