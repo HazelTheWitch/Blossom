@@ -1,15 +1,18 @@
 package com.hazeltrinity.hlibtest;
 
+import com.hazeltrinity.hazellib.init.HGroup;
 import com.hazeltrinity.hazellib.init.HMod;
+import com.hazeltrinity.hazellib.init.HModInitializer;
 
-import net.fabricmc.api.ModInitializer;
+public class HLibTestMod extends HModInitializer {
 
-public class HLibTestMod implements ModInitializer {
-
-    public static final HMod MOD = new HMod("HazelLib Test Mod", "hlibtest");
+	public static final HMod MOD = new HMod("HazelLib Test Mod", "hlibtest");
+	
+	public static final HGroup TestClientScreen = MOD
+			.register(new HGroup("test_client").setItem(new TestItem()));
 
 	@Override
-	public void onInitialize() {
-		MOD.info("TestMod Initializing");
+	public HMod getMod() {
+		return MOD;
 	}
 }
