@@ -1,9 +1,6 @@
-package com.hazeltrinity.hazellib;
+package com.hazeltrinity.hazellib.init;
 
 import java.util.function.Supplier;
-
-import com.hazeltrinity.hazellib.init.HInitializable;
-import com.hazeltrinity.hazellib.init.HMod;
 
 import org.jetbrains.annotations.Nullable;
 

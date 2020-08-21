@@ -27,7 +27,7 @@ public class HMod {
 
     // REGISTRATION
 
-    public HInitializable register(HInitializable initializable) {
+    public <T extends HInitializable> T register(T initializable) {
         initializables.add(initializable);
         initializable.setMod(this);
         return initializable;

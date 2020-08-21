@@ -20,3 +20,13 @@ bin/
 
 #fabric
 run/
+config/
+
+.mixin.out/
+
+#Minecraft data
+*logs/
+*saves/
+*crash-reports/
+options.txt
+usercache.json
