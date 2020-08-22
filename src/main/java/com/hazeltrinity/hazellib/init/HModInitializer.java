@@ -1,5 +1,7 @@
 package com.hazeltrinity.hazellib.init;
 
+import com.hazeltrinity.hazellib.HMod;
+
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.ModInitializer;

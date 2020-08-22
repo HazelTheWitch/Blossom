@@ -1,5 +1,7 @@
 package com.hazeltrinity.hazellib.init;
 
+import com.hazeltrinity.hazellib.HMod;
+
 public abstract class HInitializable {
     protected HMod mod;
 
@@ -9,8 +11,8 @@ public abstract class HInitializable {
      * @param mod the mod this initializable will be initialized with
      */
     public void setMod(HMod mod) throws IllegalStateException {
-        if (this.mod == null) {
-            throw new IllegalStateException();
+        if (this.mod != null) {
+            throw new IllegalStateException("Attempted to set multiple mods (" + this.mod.name + ", " + mod.name + ").");
         }
 
         this.mod = mod;
@@ -24,7 +26,7 @@ public abstract class HInitializable {
     public void onInitializeServer() {}
 
     /**
-     * Called before the initialization phase. Use sparringly.
+     * Called before the initialization phase. Not for general use.
      */
     public void onPreLaunch() {}
 }

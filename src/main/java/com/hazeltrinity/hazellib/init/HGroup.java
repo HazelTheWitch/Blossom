@@ -2,6 +2,8 @@ package com.hazeltrinity.hazellib.init;
 
 import java.util.function.Supplier;
 
+import com.hazeltrinity.hazellib.HMod;
+
 import org.jetbrains.annotations.Nullable;
 
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
@@ -21,24 +23,48 @@ public class HGroup extends HInitializable {
 
     private Identifier identifier;
 
+    /**
+     * Construct a new Group of items, all share the same {@code Identifier}.
+     * 
+     * @param name the name of the identifier
+     */
     public HGroup(String name) {
         this.name = name;
     }
 
+    /**
+     * Construct a new Group of items, all share the same {@code Identifier}, and
+     * set the mod to {@code mod}.
+     * 
+     * @param name the name of the identifier
+     * @param mod  the mod to use
+     */
+    public HGroup(String name, HMod mod) {
+        this(name);
+
+        setMod(mod);
+    }
+
+    /**
+     * Set this group's mod to {@code mod}.
+     * 
+     * @param mod the mod to set
+     */
     public void setMod(HMod mod) {
         this.mod = mod;
     }
 
-    public Identifier getIdentifier(HMod mod) {
-        if (identifier == null) {
+    /**
+     * Get this group's identifier given the mod set with {@code setMod}.
+     * 
+     * @return the identifier of the group or null if {@code mod} has not been set
+     */
+    @Nullable
+    public Identifier getIdentifier() {
+        if (identifier == null && mod != null) {
             identifier = new Identifier(mod.id, name);
         }
 
-        return identifier;
-    }
-
-    @Nullable
-    public Identifier getIdentifier() {
         return identifier;
     }
 
@@ -47,11 +73,22 @@ public class HGroup extends HInitializable {
 
     private Block block;
     
+    @Nullable
     public Block getBlock() {
         return block;
     }
 
-    public HGroup setBlock(Block block) {
+    /**
+     * Set this group's block.
+     * 
+     * @param block the block to set
+     * @return this group for chaining
+     * @throws IllegalStateException if called multiple times
+     */
+    public HGroup setBlock(Block block) throws IllegalStateException {
+        if (block != null) {
+            throw new IllegalStateException("Multiple blocks attempted to be set in " + name + ".");
+        }
         this.block = block;
         return this;
     }
@@ -60,19 +97,38 @@ public class HGroup extends HInitializable {
 
     private Item item;
 
+    @Nullable
     public Item getItem() {
         return item;
     }
 
+    /**
+     * Set this group's block item.
+     * 
+     * @param settings the setting to use in creating the block item
+     * @return this group for chaining
+     * @throws IllegalStateException if called multiple times, called as well as
+     *                               {@code setItem}, or before {@code setBlock}
+     */
     public HGroup setBlockItem(Item.Settings settings) throws IllegalStateException {
         if (block == null) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("No block has been set in " + name + ".");
         }
 
         return setItem(new BlockItem(block, settings));
     }
 
-    public HGroup setItem(Item item) {
+    /**
+     * Set this group's item.
+     * 
+     * @param item the item to set
+     * @return this group for chaining
+     * @throws IllegalStateException if called multiple or with {@code setBlockItem}
+     */
+    public HGroup setItem(Item item) throws IllegalStateException {
+        if (this.item != null) {
+            throw new IllegalStateException("Multiple items attempted to be set in " + name + ".");
+        }
         this.item = item;
         return this;
     }
@@ -81,13 +137,26 @@ public class HGroup extends HInitializable {
 
     private BlockEntityType<?> blockEntityType;
 
+    @Nullable
     public BlockEntityType<?> getBlockEntityType() {
         return blockEntityType;
     }
 
+    /**
+     * Set this group's block entity type
+     * 
+     * @param supplier a supplier providing a block entity
+     * @return this group for chaining
+     * @throws IllegalStateException if called multiple times or no block has been
+     *                               set
+     */
     public HGroup setBlockEntityType(Supplier<? extends BlockEntity> supplier) throws IllegalStateException {
+        if (blockEntityType != null) {
+            throw new IllegalStateException("Multiple block entity types attempted to be set in " + name + ".");
+        }
+
         if (block == null) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("No block has been set in " + name + ".");
         }
 
         blockEntityType = BlockEntityType.Builder.create(supplier, block).build(null);
@@ -98,13 +167,26 @@ public class HGroup extends HInitializable {
 
     private RenderLayer renderLayer;
 
+    @Nullable
     public RenderLayer getRenderLayer() {
         return renderLayer;
     }
 
+    /**
+     * Set this group's render layer
+     * 
+     * @param renderLayer the render layer to assign the block to
+     * @return this group for chaining
+     * @throws IllegalStateException if called multiple times or no block has been
+     *                               set
+     */
     public HGroup setRenderLayer(RenderLayer renderLayer) throws IllegalStateException {
+        if (renderLayer != null) {
+            throw new IllegalStateException("Multiple render layers attempted to be set in " + name + ".");
+        }
+
         if (block == null) {
-            throw new IllegalStateException();
+            throw new IllegalStateException("No block has been set in " + name + ".");
         }
 
         this.renderLayer = renderLayer;
@@ -115,18 +197,18 @@ public class HGroup extends HInitializable {
 
     @Override
     public void onInitialize() {
-        Identifier id = getIdentifier(mod);
+        getIdentifier();
 
         if (block != null) {
-            Registry.register(Registry.BLOCK, id, block);
+            Registry.register(Registry.BLOCK, identifier, block);
         }
 
         if (item != null) {
-            Registry.register(Registry.ITEM, id, item);
+            Registry.register(Registry.ITEM, identifier, item);
         }
 
         if (blockEntityType != null) {
-            Registry.register(Registry.BLOCK_ENTITY_TYPE, id, blockEntityType);
+            Registry.register(Registry.BLOCK_ENTITY_TYPE, identifier, blockEntityType);
         }
     }
 
@@ -139,8 +221,4 @@ public class HGroup extends HInitializable {
 
     @Override
     public void onInitializeServer() { }
-
-    @Override
-    public void onPreLaunch() { }
-    
 }

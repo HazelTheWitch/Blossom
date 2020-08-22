@@ -1,7 +1,9 @@
-package com.hazeltrinity.hazellib.init;
+package com.hazeltrinity.hazellib;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.hazeltrinity.hazellib.init.HInitializable;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -27,7 +29,7 @@ public class HMod {
 
     // REGISTRATION
 
-    public <T extends HInitializable> T register(T initializable) {
+    public <T extends HInitializable> T register(T initializable) throws IllegalStateException{
         initializables.add(initializable);
         initializable.setMod(this);
         return initializable;
