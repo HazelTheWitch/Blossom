@@ -12,21 +12,10 @@ classes/
 
 #vscode
 .settings/
-.vscode/
+!.vscode/launch.json
 bin/
 .classpath
 .project
-.vs
 
 #fabric
 run/
-config/
-
-.mixin.out/
-
-#Minecraft data
-*logs/
-*saves/
-*crash-reports/
-options.txt
-usercache.json
