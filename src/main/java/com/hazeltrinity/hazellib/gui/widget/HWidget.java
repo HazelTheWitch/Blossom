@@ -3,17 +3,49 @@ package com.hazeltrinity.hazellib.gui.widget;
 import java.util.List;
 
 import com.hazeltrinity.hazellib.gui.drawing.BackgroundPainter;
-import com.hazeltrinity.hazellib.gui.widget.scaling.ProportionalScaler;
-import com.hazeltrinity.hazellib.gui.widget.scaling.Scaler;
-
-import org.jetbrains.annotations.Nullable;
 
 import net.minecraft.client.util.math.MatrixStack;
 
 public abstract class HWidget {
     protected BackgroundPainter backgroundPainter = null;
 
-    private Scaler scaler = new ProportionalScaler(0.5, 0.5);
+    protected Size minimumSize;
+
+    public HWidget() {
+        this(new Size(0, 0));
+    }
+
+    public HWidget(Size minimumSize) {
+        this.minimumSize = minimumSize;
+    }
+
+    /**
+     * Get the minimum size this panel can be.
+     * 
+     * <p>
+     * <i>The default implementation returns the minumum size set with
+     * {@link #setMinimumSize}. That behaviour should be kept intact with implementations</i>
+     * </p>
+     * 
+     * @return the minimum size
+     */
+    public Size getMinimumSize() {
+        return minimumSize;
+    }
+
+    /**
+     * Gets a size where each dimension is the minimum of the max size and size
+     * hint.
+     * 
+     * @return the size
+     */
+    public Size getSize() {
+        if (this instanceof Panel) {
+            return getMinimumSize().max(((Panel) this).getSizeHint());
+        }
+
+        return getMinimumSize();
+    }
 
     /**
      * Paint this widget
@@ -40,50 +72,43 @@ public abstract class HWidget {
      * @param mouseY   the y coordinate of the mouse relative to the widget
      */
     public void paintWithChildren(MatrixStack matrices, int x, int y, int width, int height, int mouseX, int mouseY) {
-        int wWidth = scaler.getWidth(width, height);
-        int wHeight = scaler.getHeight(width, height);
-
         if (backgroundPainter != null) {
-            backgroundPainter.paintBackgroundInner(x, y, wWidth, wHeight);
+            backgroundPainter.paintBackgroundInner(x, y, width, height);
         }
 
-        paint(matrices, x, y, wWidth, wHeight, mouseX, mouseY);
+        paint(matrices, x, y, width, height, mouseX, mouseY);
 
-        List<ChildWidget> children = getChildren(wWidth, wHeight);
+        if (this instanceof Panel) {
+            List<ChildWidget> children = ((Panel) this).getChildren(width, height);
 
-        if (children != null) {
-            for (ChildWidget child : children) {
-                child.widget.paintWithChildren(matrices, x + child.x, y + child.y, wWidth, wHeight, mouseX - child.x, mouseY - child.y);
+            if (children != null) {
+                for (ChildWidget child : children) {
+                    child.widget.paintWithChildren(matrices, x + child.x, y + child.y, child.width, child.height, mouseX - child.x, mouseY - child.y);
+                }
             }
         }
     }
 
-    public void tick() {
+    public void tick(int width, int height) {
 
     }
 
-    /**
-     * Get all children of this widget. Does not include the children of children or
-     * any deeper.
-     * 
-     * @return a list of all children of this widget
-     */
-    @Nullable
-    public List<ChildWidget> getChildren(int width, int height) {
-        return null;
+    public void tickWithChildren(int width, int height) {
+        tick(width, height);
+
+        if (this instanceof Panel) {
+            List<ChildWidget> children = ((Panel) this).getChildren(width, height);
+
+            if (children != null) {
+                for (ChildWidget child : children) {
+                    child.widget.tickWithChildren(child.width, child.height);
+                }
+            }
+        }
     }
 
     public HWidget setBackgroundPainter(BackgroundPainter painter) {
         this.backgroundPainter = painter;
-        return this;
-    }
-
-    public Scaler getScaler() {
-        return scaler;
-    }
-
-    public HWidget setScaler(Scaler scaler) {
-        this.scaler = scaler;
         return this;
     }
 
@@ -93,15 +118,49 @@ public abstract class HWidget {
      * <i>{@code x} and {@code y} are relative to t his widget.</i>
      * </p>
      */
-    protected class ChildWidget {
+    public static class ChildWidget {
         public final int x, y;
+        public final int width, height;
         public final HWidget widget;
 
-        public ChildWidget(int x, int y, HWidget widget) {
+        public ChildWidget(HWidget widget, int x, int y) {
+            this(widget, x, y, widget.getSize());
+        }
+
+        public ChildWidget(HWidget widget, int x, int y, Size size) {
+            this(widget, x, y, size.width, size.height);
+        }
+
+        public ChildWidget(HWidget widget, int x, int y, int width, int height) {
             this.x = x;
             this.y = y;
 
+            this.width = width;
+            this.height = height;
+
             this.widget = widget;
+        }
+    }
+
+    /**
+     * Stores a size, (width, height).
+     */
+    public static class Size {
+        public final int width, height;
+
+        public Size(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+
+        /**
+         * Get the size with maximum in each direction.
+         * 
+         * @param other the other size to compare to
+         * @return the size with maximum length in each direction
+         */
+        public Size max(Size other) {
+            return new Size(Math.max(width, other.width), Math.max(height, other.height));
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.hazeltrinity.hlibtest;
 
+import com.hazeltrinity.hazellib.HMod;
 import com.hazeltrinity.hazellib.init.HGroup;
-import com.hazeltrinity.hazellib.init.HMod;
 import com.hazeltrinity.hazellib.init.HModInitializer;
 
 public class HLibTestMod extends HModInitializer {

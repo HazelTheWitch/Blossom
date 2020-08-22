@@ -1,6 +1,7 @@
 package com.hazeltrinity.hazellib.gui.screen;
 
-import com.hazeltrinity.hazellib.gui.drawing.HDrawing;
+import com.hazeltrinity.hazellib.gui.widget.HNamedWidget;
+import com.hazeltrinity.hazellib.gui.widget.HWidget.Size;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
@@ -12,12 +13,16 @@ public class HScreen extends Screen {
     public final HDescription description;
 
     private int left, top;
-    /**
-     * Root width and height of the screen.
-     */
     private int width, height;
-    private int titleX, titleY;
     
+    public static HScreen of(HDescription description) {
+        if (description.root instanceof HNamedWidget) {
+            return new HScreen(((HNamedWidget)description.root).getName(), description);
+        } else {
+            return new HScreen(description);
+        }
+    }
+
     public HScreen(HDescription description) {
         this("", description);
     }
@@ -44,12 +49,10 @@ public class HScreen extends Screen {
             left = 0;
             top = 0;
         } else {
-            left = (width - description.root.getScaler().getWidth(width, height)) / 2;
-            top = (height - description.root.getScaler().getHeight(width, height)) / 2;
+            Size rootSize = description.root.getSize();
+            left = (width - rootSize.width) / 2;
+            top = (height - rootSize.height) / 2;
         }
-
-        titleX = description.getTitleOffsetX();
-        titleY = description.getTitleOffsetY();
 
         this.width = width;
         this.height = height;
@@ -59,11 +62,8 @@ public class HScreen extends Screen {
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         super.renderBackground(matrices);
 
-        description.root.paintWithChildren(matrices, left, top, width, height, mouseX - left, mouseY - top);
-
-        if (title != null && description.isTitleVisible()) {
-            HDrawing.drawString(matrices, title, left + titleX + width / 2, top + titleY, description.getTitleAlignment(), description.getTitleColor());
-        }
+        Size rootSize = description.root.getSize();
+        description.root.paintWithChildren(matrices, left, top, rootSize.width, rootSize.height, mouseX - left, mouseY - top);
 
         super.render(matrices, mouseX, mouseY, partialTicks);
     }
@@ -71,6 +71,6 @@ public class HScreen extends Screen {
     @Override
 	public void tick() {
         super.tick();
-        description.root.tick();
+        description.root.tickWithChildren(width, height);
     }
 }
