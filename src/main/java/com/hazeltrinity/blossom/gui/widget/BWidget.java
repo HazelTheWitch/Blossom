@@ -4,6 +4,9 @@ import java.util.List;
 
 import com.hazeltrinity.blossom.gui.drawing.BackgroundPainter;
 
+import org.jetbrains.annotations.ApiStatus.OverrideOnly;
+import org.jetbrains.annotations.Nullable;
+
 import net.minecraft.client.util.math.MatrixStack;
 
 public abstract class BWidget {
@@ -91,9 +94,8 @@ public abstract class BWidget {
         }
     }
 
-    public void tick(int width, int height) {
-
-    }
+    @OverrideOnly
+    public void tick(int width, int height) { }
 
     public void tickWithChildren(int width, int height) {
         tick(width, height);
@@ -107,6 +109,46 @@ public abstract class BWidget {
                 }
             }
         }
+    }
+
+    /**
+     * Return the topmost widget at {@code mouseX}, {@code mouseY} relative to the
+     * top left corner of the widget.
+     * 
+     * <p>
+     * Returns null if the given mouse coordinates do not lie within the widget
+     * </p>
+     * 
+     * @param width  the width of the widget
+     * @param height the height of the widget
+     * @param mouseX the x position of the mouse
+     * @param mouseY the y position of the mouse
+     * @return the topmost widget
+     */
+    @Nullable
+    public BWidget hit(int width, int height, int mouseX, int mouseY) {
+        // Mouse does not lie in this widget
+        if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) {
+            return null;
+        }
+
+        if (this instanceof Panel) {
+            List<ChildWidget> children = ((Panel) this).getChildren(width, height);
+
+            if (children != null) {
+                // Top to bottom
+                for (int i = children.size() - 1; i >= 0; i--) {
+                    ChildWidget child = children.get(i);
+
+                    BWidget result = child.widget.hit(child.width, child.height, mouseX - child.x, mouseY - child.y);
+                    if (result != null) {
+                        return result;
+                    }
+                }
+            }
+        }
+
+        return this;
     }
 
     /**
@@ -140,7 +182,7 @@ public abstract class BWidget {
     }
 
     /**
-     * Stores a size, (width, height).
+     * Stores a size: (width, height).
      */
     public static class Size {
         public final int width, height;

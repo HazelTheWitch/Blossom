@@ -7,6 +7,9 @@ import com.hazeltrinity.blossom.gui.widget.BWidget.Size;
 
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * A panel is an Object which holes child widgets.
+ */
 public interface Panel {
     /**
      * Get all children of this widget. Does not include the children of children or
