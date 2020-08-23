@@ -24,4 +24,4 @@ Further it allows you to make custom GUIs, similar to [LibGui](https://github.co
 **planned feature*
 
 ## Feedback
-If you have any issues, feedback, or suggestions, please feel free to make an issue, or add me on Discord at Hazel#0720.
+If you have any issues, feedback, or suggestions, please feel free to make an issue, or add me on Discord at `Hazel#0720`.
