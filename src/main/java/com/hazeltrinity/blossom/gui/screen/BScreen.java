@@ -65,7 +65,7 @@ public class BScreen extends Screen {
 
         description.root.invalidateCachedSize();
 
-        description.root.paintWithChildren(matrices, left, top, mouseX - left, mouseY - top);
+        description.root.paint(matrices, left, top, mouseX - left, mouseY - top);
 
         super.render(matrices, mouseX, mouseY, partialTicks);
     }
@@ -73,6 +73,6 @@ public class BScreen extends Screen {
     @Override
 	public void tick() {
         super.tick();
-        description.root.tickWithChildren();
+        description.root.tick();
     }
 }

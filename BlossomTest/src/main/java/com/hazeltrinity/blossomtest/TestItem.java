@@ -29,7 +29,7 @@ public class TestItem extends Item {
                     new AbsolutePanel()
                     .addChild(
                         new WRect()
-                        .setColor(0xF1A7BE)
+                        .setColor(0xFF_F1A7BE)
                         .setMinimumSize(100, 50),
                         0.5, 0,
                         0.5, 0

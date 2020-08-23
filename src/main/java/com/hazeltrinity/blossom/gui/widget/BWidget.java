@@ -106,59 +106,14 @@ public abstract class BWidget {
      * @param mouseX   the x coordinate of the mouse relative to the widget
      * @param mouseY   the y coordinate of the mouse relative to the widget
      */
-    public abstract void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY);
-
-    public void paintBackground(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
+    public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
         if (backgroundPainter != null) {
             backgroundPainter.paintBackgroundInner(x, y, getWidth(), getHeight());
         }
     }
 
-    /**
-     * Paint this widget and its children based on the specified container size.
-     * 
-     * Attempts to paint the background of the widget before the actual widget.
-     * 
-     * @param matrices the current matrix stack
-     * @param x        the x coordinate of the left edge of the widget
-     * @param y        the y coordinate of the top edge of the widget
-     * @param width    the width of the widget
-     * @param height   the height of the widget
-     * @param mouseX   the x coordinate of the mouse relative to the widget
-     * @param mouseY   the y coordinate of the mouse relative to the widget
-     */
-    public void paintWithChildren(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
-        paintBackground(matrices, x, y, mouseX, mouseY);
-
-        paint(matrices, x, y, mouseX, mouseY);
-
-        if (this instanceof Parent) {
-            List<ChildWidget> children = ((Parent) this).getChildren();
-
-            if (children != null) {
-                for (ChildWidget child : children) {
-                    child.widget.paintWithChildren(matrices, x + child.x, y + child.y, mouseX - child.x, mouseY - child.y);
-                }
-            }
-        }
-    }
-
     @OverrideOnly
     public void tick() { }
-
-    public void tickWithChildren() {
-        tick();
-
-        if (this instanceof Parent) {
-            List<ChildWidget> children = ((Parent) this).getChildren();
-
-            if (children != null) {
-                for (ChildWidget child : children) {
-                    child.widget.tickWithChildren();
-                }
-            }
-        }
-    }
 
     /**
      * Return the topmost widget at {@code mouseX}, {@code mouseY} relative to the
@@ -167,9 +122,7 @@ public abstract class BWidget {
      * <p>
      * Returns null if the given mouse coordinates do not lie within the widget
      * </p>
-     * 
-     * @param width  the width of the widget
-     * @param height the height of the widget
+     *
      * @param mouseX the x position of the mouse
      * @param mouseY the y position of the mouse
      * @return the topmost widget

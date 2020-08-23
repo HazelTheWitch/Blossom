@@ -20,11 +20,4 @@ public interface Parent {
      */
     @Nullable
     public List<ChildWidget> getChildren();
-
-    // /**
-    //  * Get reccommended size of this parent.
-    //  * 
-    //  * @return the size hint
-    //  */
-    // public Size getSizeHint();
 }
