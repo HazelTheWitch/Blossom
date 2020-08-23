@@ -20,7 +20,7 @@ public interface Panel {
      * @return a list of all children of this widget
      */
     @Nullable
-    public List<ChildWidget> getChildren(int width, int height);
+    public List<ChildWidget> getChildren();
 
     /**
      * Get reccommended size of this panel.

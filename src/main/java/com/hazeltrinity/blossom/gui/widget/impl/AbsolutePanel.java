@@ -22,10 +22,10 @@ public class AbsolutePanel extends BNamedWidget implements Panel {
     }
 
     @Override
-    public @Nullable List<ChildWidget> getChildren(int width, int height) {
+    public @Nullable List<ChildWidget> getChildren() {
         List<ChildWidget> children = new ArrayList<ChildWidget>(this.children.size());
         for (WidgetLocation widgetLocation : this.children) {
-            children.add(widgetLocation.getChild(width, height));
+            children.add(widgetLocation.getChild(getWidth(), getHeight()));
         }
         return children;
     }

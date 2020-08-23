@@ -98,7 +98,7 @@ public abstract class BWidget {
      * @param mouseX   the x coordinate of the mouse relative to the widget
      * @param mouseY   the y coordinate of the mouse relative to the widget
      */
-    public abstract void paint(MatrixStack matrices, int x, int y, int width, int height, int mouseX, int mouseY);
+    public abstract void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY);
 
     /**
      * Paint this widget and its children based on the specified container size.
@@ -113,36 +113,36 @@ public abstract class BWidget {
      * @param mouseX   the x coordinate of the mouse relative to the widget
      * @param mouseY   the y coordinate of the mouse relative to the widget
      */
-    public void paintWithChildren(MatrixStack matrices, int x, int y, int width, int height, int mouseX, int mouseY) {
+    public void paintWithChildren(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
         if (backgroundPainter != null) {
-            backgroundPainter.paintBackgroundInner(x, y, width, height);
+            backgroundPainter.paintBackgroundInner(x, y, getWidth(), getHeight());
         }
 
-        paint(matrices, x, y, width, height, mouseX, mouseY);
+        paint(matrices, x, y, mouseX, mouseY);
 
         if (this instanceof Panel) {
-            List<ChildWidget> children = ((Panel) this).getChildren(width, height);
+            List<ChildWidget> children = ((Panel) this).getChildren();
 
             if (children != null) {
                 for (ChildWidget child : children) {
-                    child.widget.paintWithChildren(matrices, x + child.x, y + child.y, child.width, child.height, mouseX - child.x, mouseY - child.y);
+                    child.widget.paintWithChildren(matrices, x + child.x, y + child.y, mouseX - child.x, mouseY - child.y);
                 }
             }
         }
     }
 
     @OverrideOnly
-    public void tick(int width, int height) { }
+    public void tick() { }
 
-    public void tickWithChildren(int width, int height) {
-        tick(width, height);
+    public void tickWithChildren() {
+        tick();
 
         if (this instanceof Panel) {
-            List<ChildWidget> children = ((Panel) this).getChildren(width, height);
+            List<ChildWidget> children = ((Panel) this).getChildren();
 
             if (children != null) {
                 for (ChildWidget child : children) {
-                    child.widget.tickWithChildren(child.width, child.height);
+                    child.widget.tickWithChildren();
                 }
             }
         }
@@ -163,21 +163,21 @@ public abstract class BWidget {
      * @return the topmost widget
      */
     @Nullable
-    public BWidget hit(int width, int height, int mouseX, int mouseY) {
+    public BWidget hit(int mouseX, int mouseY) {
         // Mouse does not lie in this widget
-        if (mouseX < 0 || mouseY < 0 || mouseX >= width || mouseY >= height) {
+        if (mouseX < 0 || mouseY < 0 || mouseX >= getWidth() || mouseY >= getHeight()) {
             return null;
         }
 
         if (this instanceof Panel) {
-            List<ChildWidget> children = ((Panel) this).getChildren(width, height);
+            List<ChildWidget> children = ((Panel) this).getChildren();
 
             if (children != null) {
                 // Top to bottom
                 for (int i = children.size() - 1; i >= 0; i--) {
                     ChildWidget child = children.get(i);
 
-                    BWidget result = child.widget.hit(child.width, child.height, mouseX - child.x, mouseY - child.y);
+                    BWidget result = child.widget.hit(mouseX - child.x, mouseY - child.y);
                     if (result != null) {
                         return result;
                     }
@@ -198,7 +198,7 @@ public abstract class BWidget {
         ancestors.add(this);
 
         if (this instanceof Panel) {
-            List<ChildWidget> children = ((Panel) this).getChildren(1, 1);
+            List<ChildWidget> children = ((Panel) this).getChildren();
 
             if (children != null) {
                 for (ChildWidget child : children) {

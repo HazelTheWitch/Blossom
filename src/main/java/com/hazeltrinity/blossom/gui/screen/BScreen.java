@@ -13,7 +13,6 @@ public class BScreen extends Screen {
     public final BDescription description;
 
     private int left, top;
-    private int width, height;
     
     public static BScreen of(BDescription description) {
         if (description.root instanceof BNamedWidget) {
@@ -66,8 +65,7 @@ public class BScreen extends Screen {
 
         description.root.invalidateCachedSize();
 
-        Size rootSize = description.root.getSize();
-        description.root.paintWithChildren(matrices, left, top, rootSize.width, rootSize.height, mouseX - left, mouseY - top);
+        description.root.paintWithChildren(matrices, left, top, mouseX - left, mouseY - top);
 
         super.render(matrices, mouseX, mouseY, partialTicks);
     }
@@ -75,6 +73,6 @@ public class BScreen extends Screen {
     @Override
 	public void tick() {
         super.tick();
-        description.root.tickWithChildren(width, height);
+        description.root.tickWithChildren();
     }
 }
