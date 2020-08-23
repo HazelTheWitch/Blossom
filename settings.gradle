@@ -9,6 +9,6 @@ pluginManagement {
     }
 }
 
-rootProject.name = "HazelLib"
+rootProject.name = "Blossom"
 
-include ":HLibTest"
+include ":BlossomTest"

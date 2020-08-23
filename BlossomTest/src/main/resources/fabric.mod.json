@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "blossom",
+  "id": "blossomtest",
   "version": "${version}",
-  "name": "Blossom",
-  "description": "Core module to HazelTrinity's mods.",
+  "name": "Blossom Test Mod",
+  "description": "Blossom testing mod.",
   "authors": [
     "HazelTrinity"
   ],
@@ -12,15 +12,18 @@
     "homepage": "http://hazeltrinity.com"
   },
   "license": "MIT",
-  "icon": "assets/blossom/icon.png",
+  "icon": "assets/blossomtest/icon.png",
   "environment": "*",
   "entrypoints": {
-    "main": [],
+    "main": [
+      "com.hazeltrinity.blossomtest.BlossomTestMod"
+    ],
     "client": [],
     "server": []
   },
   "mixins": [],
   "depends": {
-    "fabricloader": ">=0.9.0"
+    "fabricloader": ">=0.9.0",
+    "blossom": "${version}"
   }
 }

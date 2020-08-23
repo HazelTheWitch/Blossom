@@ -25,24 +25,24 @@
     },
     {
       "type": "java",
-      "name": "Minecraft Client (:HLibTest)",
+      "name": "Minecraft Client (:BlossomTest)",
       "request": "launch",
       "cwd": "${workspaceFolder}/run",
       "console": "internalConsole",
       "stopOnEntry": false,
       "mainClass": "net.fabricmc.devlaunchinjector.Main",
-      "vmArgs": "-Dfabric.dli.config\u003d${workspaceFolder}\\HLibTest\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dclient -Dfabric.dli.main\u003dnet.fabricmc.loader.launch.knot.KnotClient",
+      "vmArgs": "-Dfabric.dli.config\u003d${workspaceFolder}\\BlossomTest\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dclient -Dfabric.dli.main\u003dnet.fabricmc.loader.launch.knot.KnotClient",
       "args": ""
     },
     {
       "type": "java",
-      "name": "Minecraft Server (:HLibTest)",
+      "name": "Minecraft Server (:BlossomTest)",
       "request": "launch",
       "cwd": "${workspaceFolder}/run",
       "console": "internalConsole",
       "stopOnEntry": false,
       "mainClass": "net.fabricmc.devlaunchinjector.Main",
-      "vmArgs": "-Dfabric.dli.config\u003d${workspaceFolder}\\HLibTest\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dserver -Dfabric.dli.main\u003dnet.fabricmc.loader.launch.knot.KnotServer",
+      "vmArgs": "-Dfabric.dli.config\u003d${workspaceFolder}\\BlossomTest\\.gradle\\loom-cache\\launch.cfg -Dfabric.dli.env\u003dserver -Dfabric.dli.main\u003dnet.fabricmc.loader.launch.knot.KnotServer",
       "args": ""
     }
   ]
