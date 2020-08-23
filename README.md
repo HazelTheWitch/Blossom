@@ -1,11 +1,11 @@
-# ![Blossom](src/main/resources/assets/blossom/icon.png?raw=true) Blossom 
+# 🌸 Blossom 
 
 **This project is a work in progress.**
 
 ## Description
 Blossom is a library mod, mainly for personal use, which allows you to group items by identifier. For example a block `yourmod:yourblock` and block entity `yourmod:yourblock` would be grouped into one [BGroup](src/main/java/com/hazeltrinity/blossom/init/BGroup.java). Make sure you only use one instance of [BMod](src/main/java/com/hazeltrinity/blossom/BMod.java) in your mod, and inherit from [BModInitializer](src/main/java/com/hazeltrinity/blossom/init/BModInitializer.java) for your entrypoints.
 
-Further it allows you to make custom GUIs, similar to [LibGui](https://github.com/CottonMC/LibGui), with the main draw to Blossom being, in the future having `styles` similar to css to customize your entire GUI at runtime easily.
+Further it allows you to make custom GUIs, similar to [LibGui](https://github.com/CottonMC/LibGui), with the main draw to Blossom being, in the future having "Styles" similar to css to customize your entire GUI at runtime easily.
 
 ## Features
  - Initialization Package
