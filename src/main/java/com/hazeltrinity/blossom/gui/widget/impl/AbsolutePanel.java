@@ -9,62 +9,12 @@ import com.hazeltrinity.blossom.gui.widget.Panel;
 
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.text.Text;
-
 /**
  * Organizes widgets by their absolute position on the panel, either by % or
  * constant offset.
  */
 public class AbsolutePanel extends BNamedWidget implements Panel {
     protected List<WidgetLocation> children = new ArrayList<WidgetLocation>();
-
-    /**
-     * Creates a new HNamedWidget centered in the widget, looks vanilla.
-     * 
-     * @param name        the title of the widget
-     */
-    public AbsolutePanel(Text name) {
-        super(name);
-    }
-
-    public AbsolutePanel(Size minimumSize) {
-        super(minimumSize);
-    }
-
-    /**
-     * Creates a new HNamedWidget centered in the widget, looks vanilla.
-     * 
-     * @param minimumSize the minimum size of the widget
-     * @param name        the title of the widget
-     */
-    public AbsolutePanel(Size minimumSize, Text name) {
-        super(minimumSize, name);
-    }
-
-    /**
-     * Create a new HNamedWidget with minimum size 0, 0.
-     * 
-     * @param name            the title of the widget
-     * @param widgetAlignment the alignment within the widget
-     * @param textAlignment   the alignment of the text
-     * @param color           the color to draw the title
-     */
-    public AbsolutePanel(Text name, double widgetAlignment, double textAlignment, int color) {
-        super(name, widgetAlignment, textAlignment, color);
-    }
-
-    /**
-     * Create a new HNamedWidget
-     * 
-     * @param minimumSize     the minimum size of the widget
-     * @param name            the title of the widget
-     * @param widgetAlignment the alignment within the widget
-     * @param textAlignment   the alignment of the text
-     * @param color           the color to draw the title
-     */
-    public AbsolutePanel(Size minimumSize, Text name, double widgetAlignment, double textAlignment, int color) {
-        super(minimumSize, name, widgetAlignment, textAlignment, color);
-    }
 
     public AbsolutePanel addChild(BWidget widget, double ax, double bx, double ay, double by) {
         children.add(new WidgetLocation(widget, ax, bx, ay, by));

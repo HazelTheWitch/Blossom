@@ -9,14 +9,16 @@ import net.minecraft.client.util.math.MatrixStack;
 public abstract class BWidget {
     protected BackgroundPainter backgroundPainter = null;
 
-    protected Size minimumSize;
-
-    public BWidget() {
-        this(new Size(0, 0));
+    protected Size minimumSize = new Size(0, 0);
+    
+    public BWidget setBackgroundPainter(BackgroundPainter painter) {
+        this.backgroundPainter = painter;
+        return this;
     }
 
-    public BWidget(Size minimumSize) {
+    public BWidget setMinimumSize(Size minimumSize) {
         this.minimumSize = minimumSize;
+        return this;
     }
 
     /**
@@ -105,11 +107,6 @@ public abstract class BWidget {
                 }
             }
         }
-    }
-
-    public BWidget setBackgroundPainter(BackgroundPainter painter) {
-        this.backgroundPainter = painter;
-        return this;
     }
 
     /**

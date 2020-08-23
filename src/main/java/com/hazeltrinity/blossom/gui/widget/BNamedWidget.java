@@ -10,72 +10,12 @@ import net.minecraft.text.Text;
 public abstract class BNamedWidget extends BWidget {
     private boolean drawTitle = true;
 
-    protected Text name;
+    protected Text name = new LiteralText("");
 
-    protected double widgetAlignment;
-    protected double textAlignment;
+    protected double widgetAlignment = 0.5;
+    protected double textAlignment = 0.5;
 
-    protected int color;
-
-    // TODO: convert to fluent builder style initialization flow to match
-
-    /**
-     * Creates a new HNamedWidget centered in the widget, looks vanilla.
-     * 
-     * @param name the title of the widget
-     */
-    public BNamedWidget(Text name) {
-        this(name, 0.5, 0.5, 0x404040);
-    }
-
-    /**
-     * Creates a new HNamedWidget centered in the widget, looks vanilla.
-     * 
-     * @param name the title of the widget
-     */
-    public BNamedWidget(Size minimumSize) {
-        this(minimumSize, new LiteralText(""), 0.5, 0.5, 0x404040);
-    }
-
-    /**
-     * Creates a new HNamedWidget centered in the widget, looks vanilla.
-     * 
-     * @param minimumSize the minimum size of the widget
-     * @param name        the title of the widget
-     */
-    public BNamedWidget(Size minimumSize, Text name) {
-        this(minimumSize, name, 0.5, 0.5, 0x404040);
-    }
-
-    /**
-     * Create a new HNamedWidget with minimum size 0, 0.
-     * 
-     * @param name            the title of the widget
-     * @param widgetAlignment the alignment within the widget
-     * @param textAlignment   the alignment of the text
-     * @param color           the color to draw the title
-     */
-    public BNamedWidget(Text name, double widgetAlignment, double textAlignment, int color) {
-        this(new Size(0, 0), name, widgetAlignment, textAlignment, color);
-    }
-
-    /**
-     * Create a new HNamedWidget
-     * 
-     * @param minimumSize     the minimum size of the widget
-     * @param name            the title of the widget
-     * @param widgetAlignment the alignment within the widget
-     * @param textAlignment   the alignment of the text
-     * @param color           the color to draw the title
-     */
-    public BNamedWidget(Size minimumSize, Text name, double widgetAlignment, double textAlignment, int color) {
-        super(minimumSize);
-        this.name = name;
-        this.widgetAlignment = clamp01(widgetAlignment);
-        this.textAlignment = clamp01(textAlignment);
-
-        this.color = color;
-    }
+    protected int color = 0x404040;
 
     private double clamp01(double x) {
         if (x < 0) {
@@ -87,20 +27,57 @@ public abstract class BNamedWidget extends BWidget {
         }
     }
 
-    public Text getName() {
-        return name;
+    /**
+     * Set the color of the name.
+     * 
+     * @param color the color to use
+     * @return this widget for chaining
+     */
+    public BNamedWidget setNameColor(int color) {
+        this.color = color;
+        return this;
     }
 
-    public void paint(MatrixStack matrices, int x, int y, int width, int height, int mouseX, int mouseY) {
-        if (drawTitle) {
-            BDrawing.drawString(matrices, name, (int)(x + width * widgetAlignment), y+4, textAlignment, color);
-        }
+    /**
+     * Set the text and widget alignment of this widget.
+     * 
+     * @param widgetAlignment the alignment within the container widget
+     * @param textAlignment the alignment for the text, as seen {@link #BDrawing.drawString}
+     * @return this widget for chaining
+     */
+    public BNamedWidget setAlignment(double widgetAlignment, double textAlignment) {
+        this.widgetAlignment = clamp01(widgetAlignment);
+        this.textAlignment = clamp01(textAlignment);
+        return this;
+
+    }
+
+    /**
+     * Set the name of this widget.
+     * 
+     * @param name a string converted to a {@code LiteralText}
+     * @return this widget for chaining
+     */
+    public BNamedWidget setName(String name) {
+        this.name = new LiteralText(name);
+        return this;
+    }
+    
+    /**
+     * Set the name of this widget.
+     * 
+     * @param name the name of the widget
+     * @return this widget for chaining
+     */
+    public BNamedWidget setName(Text name) {
+        this.name = name;
+        return this;
     }
 
     /**
      * Determines whether to draw the title of this widget.
      * 
-     * False should effectively "turn off" the HNamedWidget subclass.
+     * False should effectively "turn off" the BNamedWidget subclass.
      * 
      * @param drawTitle whether to draw the title
      * @return this widget for chaining
@@ -108,6 +85,17 @@ public abstract class BNamedWidget extends BWidget {
     public BNamedWidget doTitle(boolean drawTitle) {
         this.drawTitle = drawTitle;
         return this;
+    }
+
+    public Text getName() {
+        return name;
+    }
+
+    @Override
+    public void paint(MatrixStack matrices, int x, int y, int width, int height, int mouseX, int mouseY) {
+        if (drawTitle) {
+            BDrawing.drawString(matrices, name, (int)(x + width * widgetAlignment), y+4, textAlignment, color);
+        }
     }
 
     @Override
