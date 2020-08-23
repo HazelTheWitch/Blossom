@@ -22,9 +22,19 @@ public abstract class BWidget {
         return this;
     }
 
+    /**
+     * Set the minimum size of this widget.
+     *
+     * @param minimumSize the minimum size
+     * @return this widget for chaining
+     */
     public BWidget setMinimumSize(Size minimumSize) {
         this.minimumSize = minimumSize;
         return this;
+    }
+
+    public BWidget setMinimumSize(int width, int height) {
+        return setMinimumSize(new Size(width, height));
     }
 
     /**
@@ -32,7 +42,9 @@ public abstract class BWidget {
      * 
      * <p>
      * <i>The default implementation returns the minumum size set with
-     * {@link #setMinimumSize}. That behaviour should be kept intact with implementations</i>
+     * {@link #setMinimumSize}. That behaviour should be kept intact with
+     * implementations. Any implimentation can follow this by adding
+     * {@code super.getMinimumSize().max(<return value>)}.</i>
      * </p>
      * 
      * @return the minimum size
@@ -52,10 +64,6 @@ public abstract class BWidget {
      * @return the size
      */
     public Size calculateSize() {
-        if (this instanceof Parent) {
-            return getMinimumSize().max(((Parent) this).getSizeHint());
-        }
-
         return getMinimumSize();
     }
 
@@ -100,6 +108,12 @@ public abstract class BWidget {
      */
     public abstract void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY);
 
+    public void paintBackground(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
+        if (backgroundPainter != null) {
+            backgroundPainter.paintBackgroundInner(x, y, getWidth(), getHeight());
+        }
+    }
+
     /**
      * Paint this widget and its children based on the specified container size.
      * 
@@ -114,9 +128,7 @@ public abstract class BWidget {
      * @param mouseY   the y coordinate of the mouse relative to the widget
      */
     public void paintWithChildren(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
-        if (backgroundPainter != null) {
-            backgroundPainter.paintBackgroundInner(x, y, getWidth(), getHeight());
-        }
+        paintBackground(matrices, x, y, mouseX, mouseY);
 
         paint(matrices, x, y, mouseX, mouseY);
 
@@ -163,7 +175,7 @@ public abstract class BWidget {
      * @return the topmost widget
      */
     @Nullable
-    public BWidget hit(int mouseX, int mouseY) {
+    public HitResult hit(int mouseX, int mouseY) {
         // Mouse does not lie in this widget
         if (mouseX < 0 || mouseY < 0 || mouseX >= getWidth() || mouseY >= getHeight()) {
             return null;
@@ -177,7 +189,7 @@ public abstract class BWidget {
                 for (int i = children.size() - 1; i >= 0; i--) {
                     ChildWidget child = children.get(i);
 
-                    BWidget result = child.widget.hit(mouseX - child.x, mouseY - child.y);
+                    HitResult result = child.widget.hit(mouseX - child.x, mouseY - child.y);
                     if (result != null) {
                         return result;
                     }
@@ -185,7 +197,7 @@ public abstract class BWidget {
             }
         }
 
-        return this;
+        return new HitResult(this, mouseX, mouseY);
     }
 
     /**
@@ -259,6 +271,17 @@ public abstract class BWidget {
          */
         public Size max(Size other) {
             return new Size(Math.max(width, other.width), Math.max(height, other.height));
+        }
+    }
+
+    public static class HitResult {
+        public final BWidget widget;
+        public final int mouseX, mouseY;
+
+        public HitResult(BWidget widget, int mouseX, int mouseY) {
+            this.widget = widget;
+            this.mouseX = mouseX;
+            this.mouseY = mouseY;
         }
     }
 }

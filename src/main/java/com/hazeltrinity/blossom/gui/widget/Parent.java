@@ -3,7 +3,6 @@ package com.hazeltrinity.blossom.gui.widget;
 import java.util.List;
 
 import com.hazeltrinity.blossom.gui.widget.BWidget.ChildWidget;
-import com.hazeltrinity.blossom.gui.widget.BWidget.Size;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -22,10 +21,10 @@ public interface Parent {
     @Nullable
     public List<ChildWidget> getChildren();
 
-    /**
-     * Get reccommended size of this parent.
-     * 
-     * @return the size hint
-     */
-    public Size getSizeHint();
+    // /**
+    //  * Get reccommended size of this parent.
+    //  * 
+    //  * @return the size hint
+    //  */
+    // public Size getSizeHint();
 }

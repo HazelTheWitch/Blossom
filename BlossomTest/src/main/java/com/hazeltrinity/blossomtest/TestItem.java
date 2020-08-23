@@ -6,6 +6,7 @@ import com.hazeltrinity.blossom.gui.screen.BScreen;
 import com.hazeltrinity.blossom.gui.widget.BWidget;
 import com.hazeltrinity.blossom.gui.widget.impl.AbsolutePanel;
 
+import com.hazeltrinity.blossom.gui.widget.impl.WRect;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -26,8 +27,16 @@ public class TestItem extends Item {
             MinecraftClient.getInstance().openScreen(new BScreen(
                 new BDescription.Builder(
                     new AbsolutePanel()
+                    .addChild(
+                        new WRect()
+                        .setColor(0xF1A7BE)
+                        .setMinimumSize(100, 50),
+                        0.5, 0,
+                        0.5, 0
+                    )
+                    .setMargins(10)
                     .setName("Absolute Panel")
-                    .setMinimumSize(new BWidget.Size(1, 100))
+                    .setMinimumSize(new BWidget.Size(1, 1))
                     .setBackgroundPainter(new VanillaBackgroundPainter())
                 )
                 .build()
