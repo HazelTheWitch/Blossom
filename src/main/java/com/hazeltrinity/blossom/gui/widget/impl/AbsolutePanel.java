@@ -5,15 +5,15 @@ import java.util.List;
 
 import com.hazeltrinity.blossom.gui.widget.BNamedWidget;
 import com.hazeltrinity.blossom.gui.widget.BWidget;
-import com.hazeltrinity.blossom.gui.widget.Panel;
+import com.hazeltrinity.blossom.gui.widget.Parent;
 
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Organizes widgets by their absolute position on the panel, either by % or
+ * Organizes widgets by their absolute position on the parent, either by % or
  * constant offset.
  */
-public class AbsolutePanel extends BNamedWidget implements Panel {
+public class AbsolutePanel extends BNamedWidget implements Parent {
     protected List<WidgetLocation> children = new ArrayList<WidgetLocation>();
 
     public AbsolutePanel addChild(BWidget widget, double ax, double bx, double ay, double by) {

@@ -28,7 +28,7 @@ public abstract class BWidget {
     }
 
     /**
-     * Get the minimum size this panel can be.
+     * Get the minimum size this widget can be.
      * 
      * <p>
      * <i>The default implementation returns the minumum size set with
@@ -52,8 +52,8 @@ public abstract class BWidget {
      * @return the size
      */
     public Size calculateSize() {
-        if (this instanceof Panel) {
-            return getMinimumSize().max(((Panel) this).getSizeHint());
+        if (this instanceof Parent) {
+            return getMinimumSize().max(((Parent) this).getSizeHint());
         }
 
         return getMinimumSize();
@@ -120,8 +120,8 @@ public abstract class BWidget {
 
         paint(matrices, x, y, mouseX, mouseY);
 
-        if (this instanceof Panel) {
-            List<ChildWidget> children = ((Panel) this).getChildren();
+        if (this instanceof Parent) {
+            List<ChildWidget> children = ((Parent) this).getChildren();
 
             if (children != null) {
                 for (ChildWidget child : children) {
@@ -137,8 +137,8 @@ public abstract class BWidget {
     public void tickWithChildren() {
         tick();
 
-        if (this instanceof Panel) {
-            List<ChildWidget> children = ((Panel) this).getChildren();
+        if (this instanceof Parent) {
+            List<ChildWidget> children = ((Parent) this).getChildren();
 
             if (children != null) {
                 for (ChildWidget child : children) {
@@ -169,8 +169,8 @@ public abstract class BWidget {
             return null;
         }
 
-        if (this instanceof Panel) {
-            List<ChildWidget> children = ((Panel) this).getChildren();
+        if (this instanceof Parent) {
+            List<ChildWidget> children = ((Parent) this).getChildren();
 
             if (children != null) {
                 // Top to bottom
@@ -197,8 +197,8 @@ public abstract class BWidget {
         List<BWidget> ancestors = new ArrayList<BWidget>();
         ancestors.add(this);
 
-        if (this instanceof Panel) {
-            List<ChildWidget> children = ((Panel) this).getChildren();
+        if (this instanceof Parent) {
+            List<ChildWidget> children = ((Parent) this).getChildren();
 
             if (children != null) {
                 for (ChildWidget child : children) {

@@ -8,9 +8,9 @@ import com.hazeltrinity.blossom.gui.widget.BWidget.Size;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * A panel is an Object which holes child widgets.
+ * A parent is an Object which holds child widgets.
  */
-public interface Panel {
+public interface Parent {
     /**
      * Get all children of this widget. Does not include the children of children or
      * any deeper.
@@ -23,7 +23,7 @@ public interface Panel {
     public List<ChildWidget> getChildren();
 
     /**
-     * Get reccommended size of this panel.
+     * Get reccommended size of this parent.
      * 
      * @return the size hint
      */
