@@ -45,6 +45,8 @@ public class BScreen extends Screen {
     }
 
     public void reposition(int width, int height) {
+        description.root.invalidateCachedSize();
+
         if (description.isFullscreen()) {
             left = 0;
             top = 0;
@@ -61,6 +63,8 @@ public class BScreen extends Screen {
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         super.renderBackground(matrices);
+
+        description.root.invalidateCachedSize();
 
         Size rootSize = description.root.getSize();
         description.root.paintWithChildren(matrices, left, top, rootSize.width, rootSize.height, mouseX - left, mouseY - top);

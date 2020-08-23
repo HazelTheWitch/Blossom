@@ -1,5 +1,6 @@
 package com.hazeltrinity.blossom.gui.widget;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.hazeltrinity.blossom.gui.drawing.BackgroundPainter;
@@ -13,6 +14,8 @@ public abstract class BWidget {
     protected BackgroundPainter backgroundPainter = null;
 
     protected Size minimumSize = new Size(0, 0);
+
+    private Size cachedSize = null;
     
     public BWidget setBackgroundPainter(BackgroundPainter painter) {
         this.backgroundPainter = painter;
@@ -39,17 +42,51 @@ public abstract class BWidget {
     }
 
     /**
-     * Gets a size where each dimension is the minimum of the max size and size
+     * Calculates a size where each dimension is the minimum of the max size and size
      * hint.
+     * 
+     * <p>
+     * <i>Should almost never be used.</i>
+     * </p>
      * 
      * @return the size
      */
-    public Size getSize() {
+    public Size calculateSize() {
         if (this instanceof Panel) {
             return getMinimumSize().max(((Panel) this).getSizeHint());
         }
 
         return getMinimumSize();
+    }
+
+    /**
+     * Gets a cached version of this widget's size, to avoid calculating it many times per paint. This cache will be invalidated at the beginning of each paint event.
+     * 
+     * @return the cached size
+     */
+    public Size getSize() {
+        if (cachedSize == null) {
+            cachedSize = calculateSize();
+        }
+
+        return cachedSize;
+    }
+
+    public int getWidth() {
+        return getSize().width;
+    }
+
+    public int getHeight() {
+        return getSize().height;
+    }
+
+    /**
+     * Invalidate the size cache and that of all ancestors
+     */
+    public void invalidateCachedSize() {
+        for (BWidget widget : getAncestors()) {
+            widget.cachedSize = null;
+        }
     }
 
     /**
@@ -149,6 +186,28 @@ public abstract class BWidget {
         }
 
         return this;
+    }
+
+    /**
+     * Get a list of all widgets descending from this widget including this widget
+     * 
+     * @return a list of widgets
+     */
+    public List<BWidget> getAncestors() {
+        List<BWidget> ancestors = new ArrayList<BWidget>();
+        ancestors.add(this);
+
+        if (this instanceof Panel) {
+            List<ChildWidget> children = ((Panel) this).getChildren(1, 1);
+
+            if (children != null) {
+                for (ChildWidget child : children) {
+                    ancestors.addAll(child.widget.getAncestors());
+                }
+            }
+        }
+
+        return ancestors;
     }
 
     /**
