@@ -16,6 +16,44 @@ public abstract class BWidget {
 
     private Size cachedSize = null;
 
+    private boolean focussed = false;
+
+    /**
+     * Called when this widget gains focus.
+     */
+    @OverrideOnly
+    public void onFocus() { }
+
+    /**
+     * Called when this widget loses focus.
+     */
+    @OverrideOnly
+    public void onLoseFocus() { }
+
+    /**
+     * Called once every frame.
+     */
+    @OverrideOnly
+    public void tick() { }
+
+    public void focus() {
+        focussed = true;
+        onFocus();
+    }
+
+    public void unfocus() {
+        focussed = false;
+        onLoseFocus();
+    }
+
+    /**
+     * Get if this Widget is focus.
+     * @return if this widget is focus
+     */
+    public boolean isFocussed() {
+        return focussed;
+    }
+
     /**
      * Set the background painter
      *
@@ -112,14 +150,11 @@ public abstract class BWidget {
      * @param mouseX   the x coordinate of the mouse relative to the widget
      * @param mouseY   the y coordinate of the mouse relative to the widget
      */
+    @OverrideOnly
     public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
         if (backgroundPainter != null) {
             backgroundPainter.paintBackgroundInner(x, y, getWidth(), getHeight());
         }
-    }
-
-    @OverrideOnly
-    public void tick() {
     }
 
     /**
