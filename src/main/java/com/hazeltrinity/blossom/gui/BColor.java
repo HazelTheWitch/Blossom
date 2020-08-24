@@ -1,6 +1,7 @@
 package com.hazeltrinity.blossom.gui;
 
 public class BColor {
+
     // Constant Colors
     public static final BColor CLEAR = BColor.ofRGBA(0, 0, 0, 0);
 
@@ -46,6 +47,7 @@ public class BColor {
      * @param g green component [0,1]
      * @param b blue component [0,1]
      * @param a alpha component [0,1]
+     *
      * @return a new {@code BColor}
      */
     public static BColor ofRGBA(double r, double g, double b, double a) {
@@ -58,6 +60,7 @@ public class BColor {
      * @param r red component [0,1]
      * @param g green component [0,1]
      * @param b blue component [0,1]
+     *
      * @return a new {@code BColor}
      */
     public static BColor ofRGB(double r, double g, double b) {
@@ -71,6 +74,7 @@ public class BColor {
      * @param g green component [0,255]
      * @param b blue component [0,255]
      * @param a alpha component [0,255]
+     *
      * @return a new {@code BColor}
      */
     public static BColor ofRGBA(int r, int g, int b, int a) {
@@ -83,6 +87,7 @@ public class BColor {
      * @param r red component [0,255]
      * @param g green component [0,255]
      * @param b blue component [0,255]
+     *
      * @return a new {@code BColor}
      */
     public static BColor ofRGB(int r, int g, int b) {
@@ -95,6 +100,7 @@ public class BColor {
      * @param h hue component [0,1]
      * @param s saturation component [0,1]
      * @param v value component [0,1]
+     *
      * @return a new {@code BColor}
      */
     public static BColor ofHSV(double h, double s, double v) {
@@ -108,6 +114,7 @@ public class BColor {
      * @param s saturation component [0,1]
      * @param v value component [0,1]
      * @param a alpha component [0,1]
+     *
      * @return a new {@code BColor}
      */
     public static BColor ofHSVA(double h, double s, double v, double a) {
@@ -152,14 +159,15 @@ public class BColor {
      * Create a new {@code BColor}.
      *
      * @param color the integer form of the color
+     *
      * @return a new {@code BColor}
      */
     public static BColor ofColorRGB(int color) {
         return new BColor(
-                color & 255,
-                (color >> 8) & 255,
-                (color >> 16) & 255,
-                255
+        color & 255,
+        (color >> 8) & 255,
+        (color >> 16) & 255,
+        255
         );
     }
 
@@ -167,14 +175,15 @@ public class BColor {
      * Create a new {@code BColor}.
      *
      * @param color the integer form of the color with alpha
+     *
      * @return a new {@code BColor}
      */
     public static BColor ofColorRGBA(int color) {
         return new BColor(
-                color & 255,
-                (color >> 8) & 255,
-                (color >> 16) & 255,
-                (color >> 24) & 255
+        color & 255,
+        (color >> 8) & 255,
+        (color >> 16) & 255,
+        (color >> 24) & 255
         );
     }
 
@@ -182,6 +191,7 @@ public class BColor {
      * Decode a hex string into a {@code BColor}
      *
      * @param rrggbb the hex string
+     *
      * @return a new {@code BColor}
      */
     public static BColor ofHex(String rrggbb) {

@@ -3,7 +3,9 @@ package com.hazeltrinity.blossom.gui.screen;
 import com.hazeltrinity.blossom.gui.widget.BWidget;
 
 public class BDescription {
+
     public static class Builder {
+
         private final BWidget root;
 
         private boolean fullscreen = false;

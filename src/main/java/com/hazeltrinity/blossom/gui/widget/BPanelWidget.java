@@ -5,9 +5,11 @@ import net.minecraft.client.util.math.MatrixStack;
 import java.util.List;
 
 /**
- * An organizational widget with margins. <b>Does not handle the math behind the margins, subclasses are expected to manage that.</b>
+ * An organizational widget with margins. <b>Does not handle the math behind the margins, subclasses are expected to
+ * manage that.</b>
  */
 public abstract class BPanelWidget extends BNamedWidget implements Parent {
+
     protected int leftMargin, topMargin, rightMargin, bottomMargin;
 
     public BPanelWidget setMargins(int margin) {

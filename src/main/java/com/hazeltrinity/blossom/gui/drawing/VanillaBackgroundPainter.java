@@ -3,6 +3,7 @@ package com.hazeltrinity.blossom.gui.drawing;
 import com.hazeltrinity.blossom.gui.BColor;
 
 public class VanillaBackgroundPainter extends BackgroundPainter {
+
     public final BColor shadow, panel, hilight, outline;
 
     public VanillaBackgroundPainter() {

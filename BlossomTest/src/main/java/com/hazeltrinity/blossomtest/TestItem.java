@@ -19,25 +19,25 @@ public class TestItem extends Item {
     public TestItem() {
         super(new Item.Settings().maxCount(1));
     }
-    
+
     @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        if (world.isClient){
+        if (world.isClient) {
             MinecraftClient.getInstance().openScreen(new BScreen(
-                new BDescription.Builder(
-                    new AbsolutePanel()
-                    .addChild(
-                        new WRect()
-                        .setColor(BColor.FLATBE)
-                        .setMinimumSize(50, 50),
-                        0.5, 0,
-                        0.5, 0
-                    )
-                    .setMargins(10)
-                    .setName("Absolute Panel")
-                    .setBackgroundPainter(new VanillaBackgroundPainter())
-                )
-                .build()
+            new BDescription.Builder(
+            new AbsolutePanel()
+            .addChild(
+            new WRect()
+            .setColor(BColor.FLATBE)
+            .setMinimumSize(50, 50),
+            0.5, 0,
+            0.5, 0
+            )
+            .setMargins(10)
+            .setName("Absolute Panel")
+            .setBackgroundPainter(new VanillaBackgroundPainter())
+            )
+            .build()
             ));
         }
         return super.use(world, user, hand);

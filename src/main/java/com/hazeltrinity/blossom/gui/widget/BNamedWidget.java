@@ -8,6 +8,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 public abstract class BNamedWidget extends BWidget {
+
     private boolean drawTitle = true;
 
     protected Text name = new LiteralText("");
@@ -31,6 +32,7 @@ public abstract class BNamedWidget extends BWidget {
      * Set the color of the name.
      *
      * @param color the color to use
+     *
      * @return this widget for chaining
      */
     public BNamedWidget setNameColor(BColor color) {
@@ -43,6 +45,7 @@ public abstract class BNamedWidget extends BWidget {
      *
      * @param widgetAlignment the alignment within the container widget
      * @param textAlignment   the alignment for the text, as seen here Drawing.drawString
+     *
      * @return this widget for chaining
      */
     public BNamedWidget setAlignment(double widgetAlignment, double textAlignment) {
@@ -56,6 +59,7 @@ public abstract class BNamedWidget extends BWidget {
      * Set the name of this widget.
      *
      * @param name a string converted to a {@code LiteralText}
+     *
      * @return this widget for chaining
      */
     public BNamedWidget setName(String name) {
@@ -67,6 +71,7 @@ public abstract class BNamedWidget extends BWidget {
      * Set the name of this widget.
      *
      * @param name the name of the widget
+     *
      * @return this widget for chaining
      */
     public BNamedWidget setName(Text name) {
@@ -80,6 +85,7 @@ public abstract class BNamedWidget extends BWidget {
      * False should effectively "turn off" the BNamedWidget subclass.
      *
      * @param drawTitle whether to draw the title
+     *
      * @return this widget for chaining
      */
     public BNamedWidget doTitle(boolean drawTitle) {

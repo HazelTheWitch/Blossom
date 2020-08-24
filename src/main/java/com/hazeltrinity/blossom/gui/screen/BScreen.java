@@ -9,6 +9,7 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 public class BScreen extends Screen {
+
     public final BDescription description;
 
     private int left, top;

@@ -13,6 +13,7 @@ import net.minecraft.util.Identifier;
 import org.lwjgl.opengl.GL11;
 
 public class BDrawing {
+
     public static final BColor TOP_LEFT_BEVEL = BColor.ofColorRGB(0x373737);
     public static final BColor PANEL_BEVEL = BColor.ofColorRGB(0x8b8b8b);
     public static final BColor BOTTOM_RIGHT_BEVEL = BColor.WHITE;
@@ -29,8 +30,7 @@ public class BDrawing {
      * @param text      the text to render
      * @param x         the x position
      * @param y         the y position
-     * @param alignment the alignment of the string,
-     *                  0 = left, 0.5 = center, 1 = right
+     * @param alignment the alignment of the string, 0 = left, 0.5 = center, 1 = right
      * @param color     the color to draw
      */
     public static void drawString(MatrixStack matrices, String text, int x, int y, double alignment, BColor color) {
@@ -50,8 +50,7 @@ public class BDrawing {
      * @param text      the text to render
      * @param x         the x position
      * @param y         the y position
-     * @param alignment the alignment of the string,
-     *                  0 = left, 0.5 = center, 1 = right
+     * @param alignment the alignment of the string, 0 = left, 0.5 = center, 1 = right
      * @param color     the color to draw
      */
     public static void drawString(MatrixStack matrices, Text text, int x, int y, double alignment, BColor color) {
@@ -61,8 +60,7 @@ public class BDrawing {
     /**
      * Draw a textured rectangle to the screen.
      * <p>
-     * Lovingly taken from
-     * {@link https://github.com/CottonMC/LibGui/blob/7fbd5d5c81e9ea0d7cb8ec179c6ae1418ef45efc/src/main/java/io/github/cottonmc/cotton/gui/client/ScreenDrawing.java#L118}
+     * Lovingly taken from {@link https://github.com/CottonMC/LibGui/blob/7fbd5d5c81e9ea0d7cb8ec179c6ae1418ef45efc/src/main/java/io/github/cottonmc/cotton/gui/client/ScreenDrawing.java#L118}
      *
      * @param x       the x
      * @param y       the y

@@ -4,6 +4,7 @@ package com.hazeltrinity.blossom.gui.drawing;
  * Draws the backgrounds of widgets.
  */
 public abstract class BackgroundPainter {
+
     /**
      * Draws a background excluding border.
      *

@@ -3,12 +3,14 @@ package com.hazeltrinity.blossom.init;
 import com.hazeltrinity.blossom.BMod;
 
 public abstract class BInitializable {
+
     protected BMod mod;
 
     /**
      * Always called before initialization.
      *
      * @param mod the mod this initializable will be initialized with
+     *
      * @throws IllegalStateException if called multiple times
      */
     public void setMod(BMod mod) throws IllegalStateException {
@@ -20,7 +22,8 @@ public abstract class BInitializable {
     }
 
     /**
-     * Client/Server is called <b>asynchronously</b> during initialization. Do not count on one being called before the other.
+     * Client/Server is called <b>asynchronously</b> during initialization. Do not count on one being called before the
+     * other.
      */
     public void onInitialize() {
     }

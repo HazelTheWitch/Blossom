@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Organizes widgets by their absolute position on the parent, either by % or
- * constant offset.
+ * Organizes widgets by their absolute position on the parent, either by % or constant offset.
  */
 public class AbsolutePanel extends BPanelWidget {
+
     protected List<WidgetLocation> children = new ArrayList<WidgetLocation>();
 
     public AbsolutePanel addChild(BWidget widget, double ax, double bx, double ay, double by) {
@@ -40,6 +40,7 @@ public class AbsolutePanel extends BPanelWidget {
     }
 
     protected static class WidgetLocation {
+
         public final AbsolutePanel parent;
 
         public final BWidget widget;
@@ -57,16 +58,16 @@ public class AbsolutePanel extends BPanelWidget {
 
         public ChildWidget getChild() {
             return new ChildWidget(
-                    widget,
-                    (int) (ax * (parent.getWidth() - parent.leftMargin - parent.rightMargin) + bx) + parent.leftMargin,
-                    (int) (ay * (parent.getHeight() - parent.topMargin - parent.bottomMargin) + by) + parent.topMargin
+            widget,
+            (int) (ax * (parent.getWidth() - parent.leftMargin - parent.rightMargin) + bx) + parent.leftMargin,
+            (int) (ay * (parent.getHeight() - parent.topMargin - parent.bottomMargin) + by) + parent.topMargin
             );
         }
 
         public Size getRequiredSize() {
             return new Size(
-                    ceil((bx + widget.getWidth()) / (1 - ax)) + parent.leftMargin + parent.rightMargin,
-                    ceil((by + widget.getHeight()) / (1 - ay)) + parent.topMargin + parent.bottomMargin
+            ceil((bx + widget.getWidth()) / (1 - ax)) + parent.leftMargin + parent.rightMargin,
+            ceil((by + widget.getHeight()) / (1 - ay)) + parent.topMargin + parent.bottomMargin
             );
         }
 

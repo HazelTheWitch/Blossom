@@ -15,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.function.Supplier;
 
 public class BGroup extends BInitializable {
+
     public final String name;
 
     private BMod mod;
@@ -31,8 +32,7 @@ public class BGroup extends BInitializable {
     }
 
     /**
-     * Construct a new Group of items, all share the same {@code Identifier}, and
-     * set the mod to {@code mod}.
+     * Construct a new Group of items, all share the same {@code Identifier}, and set the mod to {@code mod}.
      *
      * @param name the name of the identifier
      * @param mod  the mod to use
@@ -80,7 +80,9 @@ public class BGroup extends BInitializable {
      * Set this group's block.
      *
      * @param block the block to set
+     *
      * @return this group for chaining
+     *
      * @throws IllegalStateException if called multiple times
      */
     public BGroup setBlock(Block block) throws IllegalStateException {
@@ -104,9 +106,11 @@ public class BGroup extends BInitializable {
      * Set this group's block item.
      *
      * @param settings the setting to use in creating the block item
+     *
      * @return this group for chaining
-     * @throws IllegalStateException if called multiple times, called as well as
-     *                               {@code setItem}, or before {@code setBlock}
+     *
+     * @throws IllegalStateException if called multiple times, called as well as {@code setItem}, or before {@code
+     *                               setBlock}
      */
     public BGroup setBlockItem(Item.Settings settings) throws IllegalStateException {
         if (block == null) {
@@ -120,7 +124,9 @@ public class BGroup extends BInitializable {
      * Set this group's item.
      *
      * @param item the item to set
+     *
      * @return this group for chaining
+     *
      * @throws IllegalStateException if called multiple or with {@code setBlockItem}
      */
     public BGroup setItem(Item item) throws IllegalStateException {
@@ -144,9 +150,10 @@ public class BGroup extends BInitializable {
      * Set this group's block entity type
      *
      * @param supplier a supplier providing a block entity
+     *
      * @return this group for chaining
-     * @throws IllegalStateException if called multiple times or no block has been
-     *                               set
+     *
+     * @throws IllegalStateException if called multiple times or no block has been set
      */
     public BGroup setBlockEntityType(Supplier<? extends BlockEntity> supplier) throws IllegalStateException {
         if (blockEntityType != null) {
@@ -174,9 +181,10 @@ public class BGroup extends BInitializable {
      * Set this group's render layer
      *
      * @param renderLayer the render layer to assign the block to
+     *
      * @return this group for chaining
-     * @throws IllegalStateException if called multiple times or no block has been
-     *                               set
+     *
+     * @throws IllegalStateException if called multiple times or no block has been set
      */
     public BGroup setRenderLayer(RenderLayer renderLayer) throws IllegalStateException {
         if (renderLayer != null) {

@@ -10,6 +10,7 @@ import java.util.HashSet;
  * Group Initializables together, allows operations to affect all of the initializables.
  */
 public class BInitializableGroup extends BInitializable {
+
     private final HashSet<BInitializable> initializables;
 
     /**
