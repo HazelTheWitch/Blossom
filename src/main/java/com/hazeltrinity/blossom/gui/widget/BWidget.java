@@ -1,14 +1,12 @@
 package com.hazeltrinity.blossom.gui.widget;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hazeltrinity.blossom.gui.drawing.BackgroundPainter;
-
+import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus.OverrideOnly;
 import org.jetbrains.annotations.Nullable;
 
-import net.minecraft.client.util.math.MatrixStack;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class BWidget {
     protected BackgroundPainter backgroundPainter = null;
@@ -16,7 +14,7 @@ public abstract class BWidget {
     protected Size minimumSize = new Size(0, 0);
 
     private Size cachedSize = null;
-    
+
     public BWidget setBackgroundPainter(BackgroundPainter painter) {
         this.backgroundPainter = painter;
         return this;
@@ -39,14 +37,14 @@ public abstract class BWidget {
 
     /**
      * Get the minimum size this widget can be.
-     * 
+     *
      * <p>
      * <i>The default implementation returns the minumum size set with
      * {@link #setMinimumSize}. That behaviour should be kept intact with
      * implementations. Any implimentation can follow this by adding
      * {@code super.getMinimumSize().max(<return value>)}.</i>
      * </p>
-     * 
+     *
      * @return the minimum size
      */
     public Size getMinimumSize() {
@@ -56,11 +54,11 @@ public abstract class BWidget {
     /**
      * Calculates a size where each dimension is the minimum of the max size and size
      * hint.
-     * 
+     *
      * <p>
      * <i>Should almost never be used.</i>
      * </p>
-     * 
+     *
      * @return the size
      */
     public Size calculateSize() {
@@ -69,7 +67,7 @@ public abstract class BWidget {
 
     /**
      * Gets a cached version of this widget's size, to avoid calculating it many times per paint. This cache will be invalidated at the beginning of each paint event.
-     * 
+     *
      * @return the cached size
      */
     public Size getSize() {
@@ -99,7 +97,7 @@ public abstract class BWidget {
 
     /**
      * Paint this widget
-     * 
+     *
      * @param matrices rendering matrices
      * @param x        the x coordinate of the left edge of the widget
      * @param y        the y coordinate of the left edge of the widget
@@ -113,12 +111,13 @@ public abstract class BWidget {
     }
 
     @OverrideOnly
-    public void tick() { }
+    public void tick() {
+    }
 
     /**
      * Return the topmost widget at {@code mouseX}, {@code mouseY} relative to the
      * top left corner of the widget.
-     * 
+     *
      * <p>
      * Returns null if the given mouse coordinates do not lie within the widget
      * </p>
@@ -155,7 +154,7 @@ public abstract class BWidget {
 
     /**
      * Get a list of all widgets descending from this widget including this widget
-     * 
+     *
      * @return a list of widgets
      */
     public List<BWidget> getAncestors() {
@@ -218,7 +217,7 @@ public abstract class BWidget {
 
         /**
          * Get the size with maximum in each direction.
-         * 
+         *
          * @param other the other size to compare to
          * @return the size with maximum length in each direction
          */

@@ -1,7 +1,7 @@
 package com.hazeltrinity.blossom.gui.widget;
 
+import com.hazeltrinity.blossom.gui.BColor;
 import com.hazeltrinity.blossom.gui.drawing.BDrawing;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
@@ -15,7 +15,7 @@ public abstract class BNamedWidget extends BWidget {
     protected double widgetAlignment = 0.5;
     protected double textAlignment = 0.5;
 
-    protected int color = 0x404040;
+    protected BColor color = BColor.ofColorRGB(0x404040);
 
     private double clamp01(double x) {
         if (x < 0) {
@@ -29,20 +29,20 @@ public abstract class BNamedWidget extends BWidget {
 
     /**
      * Set the color of the name.
-     * 
+     *
      * @param color the color to use
      * @return this widget for chaining
      */
-    public BNamedWidget setNameColor(int color) {
+    public BNamedWidget setNameColor(BColor color) {
         this.color = color;
         return this;
     }
 
     /**
      * Set the text and widget alignment of this widget.
-     * 
+     *
      * @param widgetAlignment the alignment within the container widget
-     * @param textAlignment the alignment for the text, as seen {@link #BDrawing.drawString}
+     * @param textAlignment   the alignment for the text, as seen here Drawing.drawString
      * @return this widget for chaining
      */
     public BNamedWidget setAlignment(double widgetAlignment, double textAlignment) {
@@ -54,7 +54,7 @@ public abstract class BNamedWidget extends BWidget {
 
     /**
      * Set the name of this widget.
-     * 
+     *
      * @param name a string converted to a {@code LiteralText}
      * @return this widget for chaining
      */
@@ -62,10 +62,10 @@ public abstract class BNamedWidget extends BWidget {
         this.name = new LiteralText(name);
         return this;
     }
-    
+
     /**
      * Set the name of this widget.
-     * 
+     *
      * @param name the name of the widget
      * @return this widget for chaining
      */
@@ -76,9 +76,9 @@ public abstract class BNamedWidget extends BWidget {
 
     /**
      * Determines whether to draw the title of this widget.
-     * 
+     * <p>
      * False should effectively "turn off" the BNamedWidget subclass.
-     * 
+     *
      * @param drawTitle whether to draw the title
      * @return this widget for chaining
      */
@@ -96,7 +96,7 @@ public abstract class BNamedWidget extends BWidget {
         super.paint(matrices, x, y, mouseX, mouseY);
 
         if (drawTitle) {
-            BDrawing.drawString(matrices, name, (int)(x + getWidth() * widgetAlignment), y+4, textAlignment, color);
+            BDrawing.drawString(matrices, name, (int) (x + getWidth() * widgetAlignment), y + 4, textAlignment, color);
         }
     }
 
@@ -110,9 +110,9 @@ public abstract class BNamedWidget extends BWidget {
             if (Math.abs(widgetAlignment - textAlignment) < 1e-5) {
                 size = new Size(width, 7);
             } else if (widgetAlignment < 1e-5) {
-                size = new Size((int)(width * textAlignment / 1e-5), 7);
+                size = new Size((int) (width * textAlignment / 1e-5), 7);
             } else {
-                size = new Size((int)(width * textAlignment / widgetAlignment), 7);
+                size = new Size((int) (width * textAlignment / widgetAlignment), 7);
             }
         }
 

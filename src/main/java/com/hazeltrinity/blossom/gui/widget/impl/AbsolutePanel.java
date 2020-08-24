@@ -1,12 +1,11 @@
 package com.hazeltrinity.blossom.gui.widget.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hazeltrinity.blossom.gui.widget.BPanelWidget;
 import com.hazeltrinity.blossom.gui.widget.BWidget;
-
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Organizes widgets by their absolute position on the parent, either by % or
@@ -39,7 +38,7 @@ public class AbsolutePanel extends BPanelWidget {
 
         return max.max(super.getMinimumSize());
     }
-    
+
     protected static class WidgetLocation {
         public final AbsolutePanel parent;
 
@@ -58,16 +57,16 @@ public class AbsolutePanel extends BPanelWidget {
 
         public ChildWidget getChild() {
             return new ChildWidget(
-                widget,
-                (int)(ax * parent.getWidth() + bx) + parent.leftMargin,
-                (int)(ay * parent.getHeight() + by) + parent.topMargin
+                    widget,
+                    (int) (ax * parent.getWidth() + bx) + parent.leftMargin,
+                    (int) (ay * parent.getHeight() + by) + parent.topMargin
             );
         }
 
         public Size getRequiredSize() {
             return new Size(
-                ceil((bx + widget.getWidth()) / (1 - ax)) + parent.leftMargin + parent.rightMargin,
-                ceil((by + widget.getHeight()) / (1 - ay)) + parent.topMargin + parent.bottomMargin
+                    ceil((bx + widget.getWidth()) / (1 - ax)) + parent.leftMargin + parent.rightMargin,
+                    ceil((by + widget.getHeight()) / (1 - ay)) + parent.topMargin + parent.bottomMargin
             );
         }
 

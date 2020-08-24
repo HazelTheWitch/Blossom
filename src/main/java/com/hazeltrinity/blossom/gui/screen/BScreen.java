@@ -2,7 +2,6 @@ package com.hazeltrinity.blossom.gui.screen;
 
 import com.hazeltrinity.blossom.gui.widget.BNamedWidget;
 import com.hazeltrinity.blossom.gui.widget.BWidget.Size;
-
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -13,10 +12,10 @@ public class BScreen extends Screen {
     public final BDescription description;
 
     private int left, top;
-    
+
     public static BScreen of(BDescription description) {
         if (description.root instanceof BNamedWidget) {
-            return new BScreen(((BNamedWidget)description.root).getName(), description);
+            return new BScreen(((BNamedWidget) description.root).getName(), description);
         } else {
             return new BScreen(description);
         }
@@ -58,7 +57,7 @@ public class BScreen extends Screen {
         this.width = width;
         this.height = height;
     }
-    
+
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         super.renderBackground(matrices);
@@ -71,7 +70,7 @@ public class BScreen extends Screen {
     }
 
     @Override
-	public void tick() {
+    public void tick() {
         super.tick();
         description.root.tick();
     }

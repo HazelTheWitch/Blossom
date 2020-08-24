@@ -1,14 +1,15 @@
 package com.hazeltrinity.blossom.gui.widget.impl;
 
+import com.hazeltrinity.blossom.gui.BColor;
 import com.hazeltrinity.blossom.gui.drawing.BDrawing;
 import com.hazeltrinity.blossom.gui.widget.BWidget;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class WRect extends BWidget {
 
-    private int color = 0x00_000000;
+    private BColor color = BColor.CLEAR;
 
-    public WRect setColor(int color) {
+    public WRect setColor(BColor color) {
         this.color = color;
         return this;
     }

@@ -6,7 +6,7 @@ package com.hazeltrinity.blossom.gui.drawing;
 public abstract class BackgroundPainter {
     /**
      * Draws a background excluding border.
-     * 
+     *
      * @param x      the inner top left corner x coordinate
      * @param y      the inner top right corner y coordinate
      * @param width  the inner width of the background
@@ -18,7 +18,7 @@ public abstract class BackgroundPainter {
 
     /**
      * Draws a background including border.
-     * 
+     *
      * @param x      the outer top left corner x coordinate
      * @param y      the outer top right corner y coordinate
      * @param width  the outer width of the background

@@ -1,21 +1,19 @@
 package com.hazeltrinity.blossom;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.hazeltrinity.blossom.init.BInitializable;
-
+import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import net.minecraft.util.Identifier;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BMod {
 
-    private List<BInitializable> initializables;
+    private final List<BInitializable> initializables;
 
-    private static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public final String name;
     public final String id;
@@ -29,7 +27,7 @@ public class BMod {
 
     // REGISTRATION
 
-    public <T extends BInitializable> T register(T initializable) throws IllegalStateException{
+    public <T extends BInitializable> T register(T initializable) throws IllegalStateException {
         initializables.add(initializable);
         initializable.setMod(this);
         return initializable;
@@ -59,7 +57,7 @@ public class BMod {
         for (BInitializable initializable : initializables) {
             initializable.onInitializeServer();
         }
-        
+
     }
 
     public void onPreLaunch() {

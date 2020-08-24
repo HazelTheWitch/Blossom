@@ -1,7 +1,6 @@
 package com.hazeltrinity.blossom.init;
 
 import com.hazeltrinity.blossom.BMod;
-
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.ModInitializer;
@@ -13,7 +12,7 @@ public abstract class BModInitializer implements ModInitializer, ClientModInitia
     public void onInitialize() {
         getMod().onInitialize();
     }
-    
+
     @Override
     public void onInitializeClient() {
         getMod().onInitializeClient();
@@ -23,7 +22,7 @@ public abstract class BModInitializer implements ModInitializer, ClientModInitia
     public void onInitializeServer() {
         getMod().onInitializeServer();
     }
-    
+
     @Override
     public void onPreLaunch() {
         getMod().onPreLaunch();

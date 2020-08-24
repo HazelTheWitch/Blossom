@@ -1,17 +1,19 @@
 package com.hazeltrinity.blossom.gui.drawing;
 
+import com.hazeltrinity.blossom.gui.BColor;
+
 public class VanillaBackgroundPainter extends BackgroundPainter {
-    public final int shadow, panel, hilight, outline;
+    public final BColor shadow, panel, hilight, outline;
 
     public VanillaBackgroundPainter() {
-        this(0xFF555555, 0xFFC6C6C6);
+        this(BDrawing.GUI_SHADOW, BDrawing.GUI_PANEL);
     }
 
-    public VanillaBackgroundPainter(int shadow, int panel) {
-        this(shadow, panel, 0xFFFFFFFF, 0xFF000000);
+    public VanillaBackgroundPainter(BColor shadow, BColor panel) {
+        this(shadow, panel, BColor.WHITE, BColor.BLACK);
     }
 
-    public VanillaBackgroundPainter(int shadow, int panel, int hilight, int outline) {
+    public VanillaBackgroundPainter(BColor shadow, BColor panel, BColor hilight, BColor outline) {
         this.shadow = shadow;
         this.panel = panel;
         this.hilight = hilight;
@@ -27,5 +29,5 @@ public class VanillaBackgroundPainter extends BackgroundPainter {
     public void paintBackground(int x, int y, int width, int height) {
         BDrawing.drawGuiPanel(x, y, width, height, shadow, panel, hilight, outline);
     }
-    
+
 }

@@ -1,5 +1,6 @@
 package com.hazeltrinity.blossomtest;
 
+import com.hazeltrinity.blossom.gui.BColor;
 import com.hazeltrinity.blossom.gui.drawing.VanillaBackgroundPainter;
 import com.hazeltrinity.blossom.gui.screen.BDescription;
 import com.hazeltrinity.blossom.gui.screen.BScreen;
@@ -29,7 +30,7 @@ public class TestItem extends Item {
                     new AbsolutePanel()
                     .addChild(
                         new WRect()
-                        .setColor(0xFF_F1A7BE)
+                        .setColor(BColor.FLATBE)
                         .setMinimumSize(100, 50),
                         0.5, 0,
                         0.5, 0

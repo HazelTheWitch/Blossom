@@ -1,11 +1,6 @@
 package com.hazeltrinity.blossom.init;
 
-import java.util.function.Supplier;
-
 import com.hazeltrinity.blossom.BMod;
-
-import org.jetbrains.annotations.Nullable;
-
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
@@ -15,6 +10,9 @@ import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.function.Supplier;
 
 public class BGroup extends BInitializable {
     public final String name;
@@ -25,7 +23,7 @@ public class BGroup extends BInitializable {
 
     /**
      * Construct a new Group of items, all share the same {@code Identifier}.
-     * 
+     *
      * @param name the name of the identifier
      */
     public BGroup(String name) {
@@ -35,7 +33,7 @@ public class BGroup extends BInitializable {
     /**
      * Construct a new Group of items, all share the same {@code Identifier}, and
      * set the mod to {@code mod}.
-     * 
+     *
      * @param name the name of the identifier
      * @param mod  the mod to use
      */
@@ -47,7 +45,7 @@ public class BGroup extends BInitializable {
 
     /**
      * Set this group's mod to {@code mod}.
-     * 
+     *
      * @param mod the mod to set
      */
     public void setMod(BMod mod) {
@@ -56,7 +54,7 @@ public class BGroup extends BInitializable {
 
     /**
      * Get this group's identifier given the mod set with {@code setMod}.
-     * 
+     *
      * @return the identifier of the group or null if {@code mod} has not been set
      */
     @Nullable
@@ -72,7 +70,7 @@ public class BGroup extends BInitializable {
     // Block
 
     private Block block;
-    
+
     @Nullable
     public Block getBlock() {
         return block;
@@ -80,7 +78,7 @@ public class BGroup extends BInitializable {
 
     /**
      * Set this group's block.
-     * 
+     *
      * @param block the block to set
      * @return this group for chaining
      * @throws IllegalStateException if called multiple times
@@ -104,7 +102,7 @@ public class BGroup extends BInitializable {
 
     /**
      * Set this group's block item.
-     * 
+     *
      * @param settings the setting to use in creating the block item
      * @return this group for chaining
      * @throws IllegalStateException if called multiple times, called as well as
@@ -120,7 +118,7 @@ public class BGroup extends BInitializable {
 
     /**
      * Set this group's item.
-     * 
+     *
      * @param item the item to set
      * @return this group for chaining
      * @throws IllegalStateException if called multiple or with {@code setBlockItem}
@@ -144,7 +142,7 @@ public class BGroup extends BInitializable {
 
     /**
      * Set this group's block entity type
-     * 
+     *
      * @param supplier a supplier providing a block entity
      * @return this group for chaining
      * @throws IllegalStateException if called multiple times or no block has been
@@ -174,7 +172,7 @@ public class BGroup extends BInitializable {
 
     /**
      * Set this group's render layer
-     * 
+     *
      * @param renderLayer the render layer to assign the block to
      * @return this group for chaining
      * @throws IllegalStateException if called multiple times or no block has been
@@ -220,5 +218,6 @@ public class BGroup extends BInitializable {
     }
 
     @Override
-    public void onInitializeServer() { }
+    public void onInitializeServer() {
+    }
 }

@@ -1,16 +1,16 @@
 package com.hazeltrinity.blossom.init;
 
+import com.hazeltrinity.blossom.BMod;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-
-import com.hazeltrinity.blossom.BMod;
 
 /**
  * Group Initializables together, allows operations to affect all of the initializables.
  */
 public class BInitializableGroup extends BInitializable {
-    private HashSet<BInitializable> initializables;
+    private final HashSet<BInitializable> initializables;
 
     /**
      * Create an empty initialization group.
@@ -21,16 +21,16 @@ public class BInitializableGroup extends BInitializable {
 
     /**
      * Create an initialization group from initializables.
-     * 
+     *
      * @param initial the initial initializables
      */
-    public BInitializableGroup(BInitializable ... initial) {
+    public BInitializableGroup(BInitializable... initial) {
         this(Arrays.asList(initial));
     }
 
     /**
      * Create an initialization group from initializables.
-     * 
+     *
      * @param initial the initial initializables
      */
     public BInitializableGroup(Collection<BInitializable> initial) {

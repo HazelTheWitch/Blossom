@@ -7,8 +7,9 @@ public abstract class BInitializable {
 
     /**
      * Always called before initialization.
-     * @throws IllegalStateException if called multiple times
+     *
      * @param mod the mod this initializable will be initialized with
+     * @throws IllegalStateException if called multiple times
      */
     public void setMod(BMod mod) throws IllegalStateException {
         if (this.mod != null) {
@@ -21,12 +22,18 @@ public abstract class BInitializable {
     /**
      * Client/Server is called <b>asynchronously</b> during initialization. Do not count on one being called before the other.
      */
-    public void onInitialize() {}
-    public void onInitializeClient() {}
-    public void onInitializeServer() {}
+    public void onInitialize() {
+    }
+
+    public void onInitializeClient() {
+    }
+
+    public void onInitializeServer() {
+    }
 
     /**
      * Called before the initialization phase. Not for general use.
      */
-    public void onPreLaunch() {}
+    public void onPreLaunch() {
+    }
 }
