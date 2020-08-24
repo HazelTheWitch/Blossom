@@ -58,8 +58,8 @@ public class AbsolutePanel extends BPanelWidget {
         public ChildWidget getChild() {
             return new ChildWidget(
                     widget,
-                    (int) (ax * parent.getWidth() + bx) + parent.leftMargin,
-                    (int) (ay * parent.getHeight() + by) + parent.topMargin
+                    (int) (ax * (parent.getWidth() - parent.leftMargin - parent.rightMargin) + bx) + parent.leftMargin,
+                    (int) (ay * (parent.getHeight() - parent.topMargin - parent.bottomMargin) + by) + parent.topMargin
             );
         }
 

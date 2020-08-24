@@ -4,9 +4,7 @@ import com.hazeltrinity.blossom.gui.BColor;
 import com.hazeltrinity.blossom.gui.drawing.VanillaBackgroundPainter;
 import com.hazeltrinity.blossom.gui.screen.BDescription;
 import com.hazeltrinity.blossom.gui.screen.BScreen;
-import com.hazeltrinity.blossom.gui.widget.BWidget;
 import com.hazeltrinity.blossom.gui.widget.impl.AbsolutePanel;
-
 import com.hazeltrinity.blossom.gui.widget.impl.WRect;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
@@ -31,13 +29,12 @@ public class TestItem extends Item {
                     .addChild(
                         new WRect()
                         .setColor(BColor.FLATBE)
-                        .setMinimumSize(100, 50),
+                        .setMinimumSize(50, 50),
                         0.5, 0,
                         0.5, 0
                     )
                     .setMargins(10)
                     .setName("Absolute Panel")
-                    .setMinimumSize(new BWidget.Size(1, 1))
                     .setBackgroundPainter(new VanillaBackgroundPainter())
                 )
                 .build()
