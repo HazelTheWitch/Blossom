@@ -18,7 +18,9 @@
     "main": [
       "com.hazeltrinity.blossomtest.BlossomTestMod"
     ],
-    "client": [],
+    "client": [
+      "com.hazeltrinity.blossomtest.BlossomTestModClient"
+    ],
     "server": []
   },
   "mixins": [],

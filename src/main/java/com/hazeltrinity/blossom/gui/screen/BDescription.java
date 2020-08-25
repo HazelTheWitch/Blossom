@@ -2,6 +2,8 @@ package com.hazeltrinity.blossom.gui.screen;
 
 import com.hazeltrinity.blossom.gui.widget.BWidget;
 
+import java.util.List;
+
 public class BDescription {
 
     public static class Builder {
@@ -30,13 +32,56 @@ public class BDescription {
 
     public final BWidget root;
 
+    private BWidget focus;
+
     private boolean fullscreen;
+
+    private List<BWidget> focusQueue = null;
 
     private BDescription(BWidget root) {
         this.root = root;
+
+        for (BWidget widget : root.getAncestors()) {
+            widget.setDescription(this);
+        }
     }
 
     public boolean isFullscreen() {
         return fullscreen;
+    }
+
+    // TODO: Implement focus cycling. AKA tab to select next focusable widget
+
+    /**
+     * Choose a new focussed widget. If the new widget can not be focussed, unfocus current focus anyway.
+     *
+     * @param newFocus the new widget to focus
+     */
+    public void focus(BWidget newFocus) {
+        focus.unfocus();
+
+        if (newFocus.isFocusable()) {
+            newFocus.focus();
+
+            focus = newFocus;
+        }
+    }
+
+    /**
+     * Choose a new focussed widget. If the new widget can not be focussed, do not change focus.
+     *
+     * @param newFocus the new widget to focus
+     */
+    public void requestFocus(BWidget newFocus) {
+        if (newFocus.isFocusable()) {
+            focus.unfocus();
+            newFocus.focus();
+
+            focus = newFocus;
+        }
+    }
+
+    public BWidget getFocus() {
+        return focus;
     }
 }

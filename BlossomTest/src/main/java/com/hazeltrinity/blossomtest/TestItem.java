@@ -25,18 +25,18 @@ public class TestItem extends Item {
         if (world.isClient) {
             MinecraftClient.getInstance().openScreen(new BScreen(
             new BDescription.Builder(
-            new WAbsolutePanel()
-            .addChild(
-            new WRect()
-            .setColor(BColor.FLATBE)
-            .setMinimumSize(50, 50),
-            0.5, 0,
-            0.5, 0
-            )
-            .setMargins(10)
-            .setName("Absolute Panel")
-            .setBackgroundPainter(new VanillaBackgroundPainter())
-            )
+                new WAbsolutePanel()
+                .addChild(
+                    new WRect()
+                    .setColor(BColor.FLATBE)
+                    .setMinimumSize(50, 50),
+                    0.5, 0,
+                    0.5, 0
+                )
+                .setMargins(10)
+                .setName("Absolute Panel")
+                .setBackgroundPainter(new VanillaBackgroundPainter())
+                )
             .build()
             ));
         }

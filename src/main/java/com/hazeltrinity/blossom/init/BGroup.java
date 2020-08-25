@@ -1,13 +1,22 @@
 package com.hazeltrinity.blossom.init;
 
 import com.hazeltrinity.blossom.BMod;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
+import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry.Factory;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry.ExtendedClientHandlerFactory;
+import net.fabricmc.fabric.api.screenhandler.v1.ScreenHandlerRegistry.SimpleClientHandlerFactory;
 import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.screen.ScreenHandler;
+import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
@@ -86,7 +95,7 @@ public class BGroup extends BInitializable {
      * @throws IllegalStateException if called multiple times
      */
     public BGroup setBlock(Block block) throws IllegalStateException {
-        if (block != null) {
+        if (this.block != null) {
             throw new IllegalStateException("Multiple blocks attempted to be set in " + name + ".");
         }
         this.block = block;
@@ -113,7 +122,7 @@ public class BGroup extends BInitializable {
      *                               setBlock}
      */
     public BGroup setBlockItem(Item.Settings settings) throws IllegalStateException {
-        if (block == null) {
+        if (this.block == null) {
             throw new IllegalStateException("No block has been set in " + name + ".");
         }
 
@@ -169,9 +178,10 @@ public class BGroup extends BInitializable {
     }
 
     // Render Layer
-
+    @Environment(EnvType.CLIENT)
     private RenderLayer renderLayer;
 
+    @Environment(EnvType.CLIENT)
     @Nullable
     public RenderLayer getRenderLayer() {
         return renderLayer;
@@ -186,8 +196,9 @@ public class BGroup extends BInitializable {
      *
      * @throws IllegalStateException if called multiple times or no block has been set
      */
+    @Environment(EnvType.CLIENT)
     public BGroup setRenderLayer(RenderLayer renderLayer) throws IllegalStateException {
-        if (renderLayer != null) {
+        if (this.renderLayer != null) {
             throw new IllegalStateException("Multiple render layers attempted to be set in " + name + ".");
         }
 
@@ -197,6 +208,26 @@ public class BGroup extends BInitializable {
 
         this.renderLayer = renderLayer;
         return this;
+    }
+
+    // Screen Handler
+
+    private BScreenGroup<?, ?, ?> screenGroup;
+
+    public <H extends ScreenHandler, S extends Screen & ScreenHandlerProvider<H>> BGroup setScreenHandlerSimple(SimpleClientHandlerFactory<H> screenHandler, Factory<H, S> screen) {
+        screenGroup = new BScreenGroup<H, H, S>(identifier).setScreenHandlerSimple(screenHandler).setScreen(screen);
+        tackOn(screenGroup);
+        return this;
+    }
+
+    public <H extends ScreenHandler, S extends Screen & ScreenHandlerProvider<H>> BGroup setScreenHandlerExtended(ExtendedClientHandlerFactory<H> screenHandler, Factory<H, S> screen) {
+        screenGroup = new BScreenGroup<H, H, S>(identifier).setScreenHandlerExtended(screenHandler).setScreen(screen);
+        tackOn(screenGroup);
+        return this;
+    }
+
+    public ScreenHandlerType<?> screenHandlerType() {
+        return screenGroup.getScreenHandlerType();
     }
 
     // INITIALIZATION
@@ -216,16 +247,23 @@ public class BGroup extends BInitializable {
         if (blockEntityType != null) {
             Registry.register(Registry.BLOCK_ENTITY_TYPE, identifier, blockEntityType);
         }
+
+        super.onInitialize();
     }
 
     @Override
+    @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
         if (renderLayer != null) {
             BlockRenderLayerMap.INSTANCE.putBlock(block, renderLayer);
         }
+
+        super.onInitializeClient();
     }
 
     @Override
+    @Environment(EnvType.SERVER)
     public void onInitializeServer() {
+        super.onInitializeServer();
     }
 }

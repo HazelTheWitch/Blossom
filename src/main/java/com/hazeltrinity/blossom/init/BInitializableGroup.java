@@ -1,6 +1,8 @@
 package com.hazeltrinity.blossom.init;
 
 import com.hazeltrinity.blossom.BMod;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,23 +50,33 @@ public class BInitializableGroup extends BInitializable {
         for (BInitializable initializable : initializables) {
             initializable.onInitialize();
         }
+
+        super.onInitialize();
     }
 
+    @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
         for (BInitializable initializable : initializables) {
             initializable.onInitializeClient();
         }
+
+        super.onInitializeClient();
     }
 
+    @Environment(EnvType.SERVER)
     public void onInitializeServer() {
         for (BInitializable initializable : initializables) {
             initializable.onInitializeServer();
         }
+
+        super.onInitializeServer();
     }
 
     public void onPreLaunch() {
         for (BInitializable initializable : initializables) {
             initializable.onPreLaunch();
         }
+
+        super.onPreLaunch();
     }
 }

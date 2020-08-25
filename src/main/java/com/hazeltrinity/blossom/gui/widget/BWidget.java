@@ -1,6 +1,7 @@
 package com.hazeltrinity.blossom.gui.widget;
 
 import com.hazeltrinity.blossom.gui.drawing.BackgroundPainter;
+import com.hazeltrinity.blossom.gui.screen.BDescription;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus.OverrideOnly;
 import org.jetbrains.annotations.Nullable;
@@ -13,28 +14,40 @@ public abstract class BWidget {
     protected BackgroundPainter backgroundPainter = null;
 
     protected Size minimumSize = new Size(0, 0);
-
+    protected boolean focusable = false;
+    protected @Nullable BDescription description;
     private Size cachedSize = null;
-
     private boolean focussed = false;
+
+    /**
+     * Set this widget to a new description
+     *
+     * @param description the new description
+     */
+    public void setDescription(BDescription description) {
+        this.description = description;
+    }
 
     /**
      * Called when this widget gains focus.
      */
     @OverrideOnly
-    public void onFocus() { }
+    public void onFocus() {
+    }
 
     /**
      * Called when this widget loses focus.
      */
     @OverrideOnly
-    public void onLoseFocus() { }
+    public void onLoseFocus() {
+    }
 
     /**
      * Called once every frame.
      */
     @OverrideOnly
-    public void tick() { }
+    public void tick() {
+    }
 
     public void focus() {
         focussed = true;
@@ -48,6 +61,7 @@ public abstract class BWidget {
 
     /**
      * Get if this Widget is focus.
+     *
      * @return if this widget is focus
      */
     public boolean isFocussed() {
@@ -63,6 +77,27 @@ public abstract class BWidget {
      */
     public BWidget setBackgroundPainter(BackgroundPainter painter) {
         this.backgroundPainter = painter;
+        return this;
+    }
+
+    /**
+     * Can this widget take focus?
+     *
+     * @return whether or not this widget can be focussed
+     */
+    public boolean isFocusable() {
+        return focusable;
+    }
+
+    /**
+     * Set whether or not this widget is focusable, useful for buttons, scrolling, etc.
+     *
+     * @param focusable is this widget focusable
+     *
+     * @return this widget for chaining
+     */
+    public BWidget setFocusable(boolean focusable) {
+        this.focusable = focusable;
         return this;
     }
 
