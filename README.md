@@ -17,7 +17,7 @@ Further it allows you to make custom GUIs, similar to [LibGui](https://github.co
      - `Panel` widgets structure the GUI.
      - `BWidgets` draw and manipulate data.
    - Client side only GUI
-   - *Server and client sided GUI
+   - Server and client sided GUI
    - *Event system
    - *Style system
   
