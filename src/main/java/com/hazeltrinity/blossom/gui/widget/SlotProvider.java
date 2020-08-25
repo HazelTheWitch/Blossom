@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface SlotProvider {
+
     /**
      * Get a list of slots this widget provides
      *

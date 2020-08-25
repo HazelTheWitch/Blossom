@@ -14,6 +14,7 @@ import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
 
 public class BScreenGroup<V extends H, H extends ScreenHandler, S extends Screen & ScreenHandlerProvider<H>> extends BInitializable {
+
     @Environment(EnvType.CLIENT)
     private ScreenRegistry.Factory<H, S> screen;
     private ScreenHandlerType<V> screenHandlerType;
@@ -30,12 +31,12 @@ public class BScreenGroup<V extends H, H extends ScreenHandler, S extends Screen
         return this;
     }
 
-    public  BScreenGroup<V, H, S> setScreenHandlerSimple(SimpleClientHandlerFactory<V> screenHandler) {
+    public BScreenGroup<V, H, S> setScreenHandlerSimple(SimpleClientHandlerFactory<V> screenHandler) {
         screenHandlerType = ScreenHandlerRegistry.registerSimple(identifier, screenHandler);
         return this;
     }
 
-    public  BScreenGroup<V, H, S> setScreenHandlerExtended(ExtendedClientHandlerFactory<V> screenHandler) {
+    public BScreenGroup<V, H, S> setScreenHandlerExtended(ExtendedClientHandlerFactory<V> screenHandler) {
         screenHandlerType = ScreenHandlerRegistry.registerExtended(identifier, screenHandler);
         return this;
     }

@@ -18,6 +18,7 @@ public abstract class BInitializable {
      * Add another {@code BInitializable} to be tacked on after this one's initialization step.
      *
      * @param other the other {@code BInitializable}
+     *
      * @return this for chaining
      */
     public BInitializable tackOn(BInitializable other) {

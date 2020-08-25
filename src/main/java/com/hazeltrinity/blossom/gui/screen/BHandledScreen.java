@@ -11,17 +11,10 @@ import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
 public class BHandledScreen<T extends BScreenHandler> extends HandledScreen<T> implements ScreenHandlerProvider<T> {
+
     public final BDescription description;
 
     private int left, top;
-
-    public BHandledScreen<T> of(T handler, PlayerInventory inventory, Text title) {
-        if (description.root instanceof BNamedWidget) {
-            return new BHandledScreen<>(handler, inventory, ((BNamedWidget) description.root).getName());
-        } else {
-            return new BHandledScreen<>(handler, inventory, new LiteralText(""));
-        }
-    }
 
     public BHandledScreen(T handler, PlayerInventory inventory, String title) {
         this(handler, inventory, new LiteralText(title));
@@ -33,10 +26,18 @@ public class BHandledScreen<T extends BScreenHandler> extends HandledScreen<T> i
         this.description = handler.description;
     }
 
+    public BHandledScreen<T> of(T handler, PlayerInventory inventory, Text title) {
+        if (description.root instanceof BNamedWidget) {
+            return new BHandledScreen<>(handler, inventory, ((BNamedWidget) description.root).getName());
+        } else {
+            return new BHandledScreen<>(handler, inventory, new LiteralText(""));
+        }
+    }
+
     @Override
     protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
-         // This is empty because widgets should draw their own background.
-         // Eventually maybe will change widgets to have a "draw background" flag, and leave it to each widget.
+        // This is empty because widgets should draw their own background.
+        // Eventually maybe will change widgets to have a "draw background" flag, and leave it to each widget.
     }
 
     @Override

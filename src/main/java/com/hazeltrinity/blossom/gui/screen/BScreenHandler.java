@@ -16,21 +16,13 @@ import java.util.HashMap;
 
 public class BScreenHandler extends ScreenHandler {
 
-    @FunctionalInterface
-    public interface SlotClickAction {
-        @Nullable ItemStack act(BScreenHandler handler, int slotNumber, int button, PlayerEntity player);
-    }
-
     /**
      * Tells the click handler to default to super implementation of whichever action.
      */
     public static final SlotClickAction NULL_ACTION = (handler, slotNumber, button, player) -> null;
-
     public final BDescription description;
-
     public final PlayerInventory playerInventory;
     public final @Nullable Inventory blockInventory;
-
     private final HashMap<SlotActionType, SlotClickAction> actionCases = new HashMap<>();
 
     // TODO: Documentation
@@ -57,7 +49,14 @@ public class BScreenHandler extends ScreenHandler {
         initSlots();
     }
 
-    // TODO: Documentation
+    /**
+     * Define the action to take in different cases.
+     *
+     * @param type   which case to be used
+     * @param action the action to take
+     *
+     * @return this for chaining
+     */
     public BScreenHandler setSlotClickCase(SlotActionType type, SlotClickAction action) {
         actionCases.put(type, action);
         return this;
@@ -92,10 +91,16 @@ public class BScreenHandler extends ScreenHandler {
         for (BWidget widget : description.root.getAncestors()) {
             if (widget instanceof SlotProvider) {
                 for (Slot slot : ((SlotProvider) widget).getSlots(offset, playerInventory, blockInventory)) {
-                    offset ++;
+                    offset++;
                     super.addSlot(slot);
                 }
             }
         }
+    }
+
+    @FunctionalInterface
+    public interface SlotClickAction {
+
+        @Nullable ItemStack act(BScreenHandler handler, int slotNumber, int button, PlayerEntity player);
     }
 }

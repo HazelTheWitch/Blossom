@@ -14,14 +14,6 @@ public class BScreen extends Screen {
 
     private int left, top;
 
-    public static BScreen of(BDescription description) {
-        if (description.root instanceof BNamedWidget) {
-            return new BScreen(((BNamedWidget) description.root).getName(), description);
-        } else {
-            return new BScreen(description);
-        }
-    }
-
     public BScreen(BDescription description) {
         this("", description);
     }
@@ -34,6 +26,14 @@ public class BScreen extends Screen {
         super(title);
 
         this.description = description;
+    }
+
+    public static BScreen of(BDescription description) {
+        if (description.root instanceof BNamedWidget) {
+            return new BScreen(((BNamedWidget) description.root).getName(), description);
+        } else {
+            return new BScreen(description);
+        }
     }
 
     @Override
