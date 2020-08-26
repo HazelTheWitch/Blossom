@@ -6,7 +6,6 @@ import com.hazeltrinity.blossom.gui.widget.BWidget;
 import net.minecraft.client.util.math.MatrixStack;
 
 public class WRect extends BWidget {
-
     private BColor color = BColor.CLEAR;
 
     public WRect setColor(BColor color) {

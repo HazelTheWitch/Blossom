@@ -11,7 +11,6 @@ import java.util.List;
  * Organizes widgets by their absolute position on the parent, either by % or constant offset.
  */
 public class WAbsolutePanel extends BPanelWidget {
-
     protected List<WidgetLocation> children = new ArrayList<WidgetLocation>();
 
     public WAbsolutePanel addChild(BWidget widget, double ax, double bx, double ay, double by) {
@@ -40,7 +39,6 @@ public class WAbsolutePanel extends BPanelWidget {
     }
 
     protected static class WidgetLocation {
-
         public final WAbsolutePanel parent;
 
         public final BWidget widget;

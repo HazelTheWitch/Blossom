@@ -13,7 +13,6 @@ import java.util.List;
  * A widget which holds an NxM grid of slots, looks like a chest.
  */
 public class WGridInventory extends BWidget implements SlotProvider {
-
     private List<Slot> slots;
     private int N = 1, M = 1;
     private SlotGenerator slotGenerator;
@@ -45,7 +44,6 @@ public class WGridInventory extends BWidget implements SlotProvider {
 
     @FunctionalInterface
     public interface SlotGenerator {
-
         Slot get(int offset, int n, int m, PlayerInventory playerInventory, Inventory blockInventory);
     }
 }
