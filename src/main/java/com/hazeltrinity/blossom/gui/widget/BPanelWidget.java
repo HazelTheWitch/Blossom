@@ -12,14 +12,39 @@ public abstract class BPanelWidget extends BNamedWidget implements Parent {
 
     protected int leftMargin, topMargin, rightMargin, bottomMargin;
 
+    /**
+     * Sets a constant offset from each edge of the widget
+     *
+     * @param margin the margin to apply to each edge
+     *
+     * @return this widget for chaining
+     */
     public BPanelWidget setMargins(int margin) {
         return setMargins(margin, margin, margin, margin);
     }
 
+    /**
+     * Sets the margins to be equal horizontally and equal vertically.
+     *
+     * @param horizontal the margin to apply to the left and right
+     * @param vertical   the margin to apply to the top and bottom
+     *
+     * @return this widget for chaining
+     */
     public BPanelWidget setMargins(int horizontal, int vertical) {
         return setMargins(horizontal, vertical, horizontal, vertical);
     }
 
+    /**
+     * Set the margins individually for each side.
+     *
+     * @param left   the left margin
+     * @param top    the top margin
+     * @param right  the right margin
+     * @param bottom the bottom margin
+     *
+     * @return this widget for chaining
+     */
     public BPanelWidget setMargins(int left, int top, int right, int bottom) {
         this.leftMargin = left;
         this.topMargin = top;
@@ -28,6 +53,13 @@ public abstract class BPanelWidget extends BNamedWidget implements Parent {
         return this;
     }
 
+    /**
+     * Add this widget's margins to the inner size
+     *
+     * @param oldSize the inner size of the panel
+     *
+     * @return the outer size
+     */
     protected Size addMargins(Size oldSize) {
         return new Size(oldSize.width + leftMargin + rightMargin, oldSize.height + topMargin + bottomMargin);
     }

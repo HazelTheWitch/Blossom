@@ -23,6 +23,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
+/**
+ * A group of objects to be initialized. They are each handled at the right time automatically. Each item shares the
+ * same identifier.
+ */
 public class BGroup extends BInitializable {
 
     public final String name;
@@ -30,6 +34,16 @@ public class BGroup extends BInitializable {
     private BMod mod;
 
     private Identifier identifier;
+    private Block block;
+    private Item item;
+    private BlockEntityType<?> blockEntityType;
+    // Render Layer
+    @Environment(EnvType.CLIENT)
+    private RenderLayer renderLayer;
+
+    // REGISTERED ITEMS
+    // Block
+    private BScreenGroup<?, ?, ?> screenGroup;
 
     /**
      * Construct a new Group of items, all share the same {@code Identifier}.
@@ -52,6 +66,8 @@ public class BGroup extends BInitializable {
         setMod(mod);
     }
 
+    // Item/BlockItem
+
     /**
      * Set this group's mod to {@code mod}.
      *
@@ -69,17 +85,17 @@ public class BGroup extends BInitializable {
     @Nullable
     public Identifier getIdentifier() {
         if (identifier == null && mod != null) {
-            identifier = new Identifier(mod.id, name);
+            identifier = mod.id(name);
         }
 
         return identifier;
     }
 
-    // REGISTERED ITEMS
-    // Block
-
-    private Block block;
-
+    /**
+     * Get the block of this group.
+     *
+     * @return the block
+     */
     @Nullable
     public Block getBlock() {
         return block;
@@ -102,13 +118,33 @@ public class BGroup extends BInitializable {
         return this;
     }
 
-    // Item/BlockItem
+    // Entity Type
 
-    private Item item;
-
+    /**
+     * Get the item of this group.
+     *
+     * @return the item
+     */
     @Nullable
     public Item getItem() {
         return item;
+    }
+
+    /**
+     * Set this group's item.
+     *
+     * @param item the item to set
+     *
+     * @return this group for chaining
+     *
+     * @throws IllegalStateException if called multiple or with {@code setBlockItem}
+     */
+    public BGroup setItem(Item item) throws IllegalStateException {
+        if (this.item != null) {
+            throw new IllegalStateException("Multiple items attempted to be set in " + name + ".");
+        }
+        this.item = item;
+        return this;
     }
 
     /**
@@ -130,26 +166,10 @@ public class BGroup extends BInitializable {
     }
 
     /**
-     * Set this group's item.
+     * Get the block entity type of this group.
      *
-     * @param item the item to set
-     *
-     * @return this group for chaining
-     *
-     * @throws IllegalStateException if called multiple or with {@code setBlockItem}
+     * @return the block entity type
      */
-    public BGroup setItem(Item item) throws IllegalStateException {
-        if (this.item != null) {
-            throw new IllegalStateException("Multiple items attempted to be set in " + name + ".");
-        }
-        this.item = item;
-        return this;
-    }
-
-    // Entity Type
-
-    private BlockEntityType<?> blockEntityType;
-
     @Nullable
     public BlockEntityType<?> getBlockEntityType() {
         return blockEntityType;
@@ -177,15 +197,18 @@ public class BGroup extends BInitializable {
         return this;
     }
 
-    // Render Layer
-    @Environment(EnvType.CLIENT)
-    private RenderLayer renderLayer;
-
+    /**
+     * Get the block's render layer.
+     *
+     * @return the block's render layer
+     */
     @Environment(EnvType.CLIENT)
     @Nullable
     public RenderLayer getRenderLayer() {
         return renderLayer;
     }
+
+    // Screen Handler
 
     /**
      * Set this group's render layer
@@ -210,22 +233,43 @@ public class BGroup extends BInitializable {
         return this;
     }
 
-    // Screen Handler
-
-    private BScreenGroup<?, ?, ?> screenGroup;
-
+    /**
+     * Set this group's screen handler and screen for simple screens
+     *
+     * @param screenHandler the screen handler factory
+     * @param screen        the screen factory
+     * @param <H>           the screenhandler type
+     * @param <S>           the screen type
+     *
+     * @return this for chaining
+     */
     public <H extends ScreenHandler, S extends Screen & ScreenHandlerProvider<H>> BGroup setScreenHandlerSimple(SimpleClientHandlerFactory<H> screenHandler, Factory<H, S> screen) {
         screenGroup = new BScreenGroup<H, H, S>(identifier).setScreenHandlerSimple(screenHandler).setScreen(screen);
         tackOn(screenGroup);
         return this;
     }
 
+    /**
+     * Set this group's screen handler and screen for extended screens
+     *
+     * @param screenHandler the screen handler factory
+     * @param screen        the screen factory
+     * @param <H>           the screenhandler type
+     * @param <S>           the screen type
+     *
+     * @return this for chaining
+     */
     public <H extends ScreenHandler, S extends Screen & ScreenHandlerProvider<H>> BGroup setScreenHandlerExtended(ExtendedClientHandlerFactory<H> screenHandler, Factory<H, S> screen) {
         screenGroup = new BScreenGroup<H, H, S>(identifier).setScreenHandlerExtended(screenHandler).setScreen(screen);
         tackOn(screenGroup);
         return this;
     }
 
+    /**
+     * Get the screen handler type
+     *
+     * @return the screen handler type
+     */
     public ScreenHandlerType<?> screenHandlerType() {
         return screenGroup.getScreenHandlerType();
     }

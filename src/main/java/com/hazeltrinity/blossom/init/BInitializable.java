@@ -6,6 +6,10 @@ import net.fabricmc.api.Environment;
 
 import java.util.ArrayList;
 
+/**
+ * Represents anything that needs a hook in one or multiple of `onInitialize`, `onInitializeClient`,
+ * `onInitializeServer`, or `onPreLaunch`.
+ */
 public abstract class BInitializable {
 
     protected BMod mod;
@@ -42,8 +46,7 @@ public abstract class BInitializable {
     }
 
     /**
-     * Client/Server is called <b>asynchronously</b> during initialization. Do not count on one being called before the
-     * other.
+     * Called after prelaunch before client or server.
      */
     public void onInitialize() {
         for (BInitializable other : tackedOn) {
@@ -51,6 +54,9 @@ public abstract class BInitializable {
         }
     }
 
+    /**
+     * Called asynchronously after main, with server
+     */
     @Environment(EnvType.CLIENT)
     public void onInitializeClient() {
         for (BInitializable other : tackedOn) {
@@ -58,6 +64,9 @@ public abstract class BInitializable {
         }
     }
 
+    /**
+     * Called asynchronously after main, with client
+     */
     @Environment(EnvType.SERVER)
     public void onInitializeServer() {
         for (BInitializable other : tackedOn) {

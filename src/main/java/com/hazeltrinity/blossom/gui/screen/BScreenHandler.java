@@ -14,6 +14,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 
+/**
+ * A Blossom Screen handler.
+ */
 public class BScreenHandler extends ScreenHandler {
 
     /**
@@ -25,7 +28,14 @@ public class BScreenHandler extends ScreenHandler {
     public final @Nullable Inventory blockInventory;
     private final HashMap<SlotActionType, SlotClickAction> actionCases = new HashMap<>();
 
-    // TODO: Documentation
+    /**
+     * Create a new BScreenHandler with no block inventory.
+     *
+     * @param type            the screen handler type
+     * @param syncId          the sync id
+     * @param playerInventory the player inventory
+     * @param description     the {@link BDescription} to use
+     */
     public BScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, BDescription description) {
         super(type, syncId);
 
@@ -35,7 +45,15 @@ public class BScreenHandler extends ScreenHandler {
         this.blockInventory = null;
     }
 
-    // TODO: Documentation
+    /**
+     * Create a new BScreenHandler with a block inventory.
+     *
+     * @param type            the screen handler type
+     * @param syncId          the sync id
+     * @param playerInventory the player inventory
+     * @param blockInventory  the block inventory to use
+     * @param description     the {@link BDescription} to use
+     */
     public BScreenHandler(@Nullable ScreenHandlerType<?> type, int syncId, PlayerInventory playerInventory, Inventory blockInventory, BDescription description) {
         super(type, syncId);
 
@@ -86,21 +104,30 @@ public class BScreenHandler extends ScreenHandler {
     }
 
     private void initSlots() {
-        int offset = 0;
-
         for (BWidget widget : description.root.getAncestors()) {
             if (widget instanceof SlotProvider) {
-                for (Slot slot : ((SlotProvider) widget).getSlots(offset, playerInventory, blockInventory)) {
-                    offset++;
+                for (Slot slot : ((SlotProvider) widget).getSlots(playerInventory, blockInventory)) {
                     super.addSlot(slot);
                 }
             }
         }
     }
 
+    /**
+     * Represents an action that takes place when a slot is clicked.
+     */
     @FunctionalInterface
     public interface SlotClickAction {
-
+        /**
+         * The action taken when triggered
+         *
+         * @param handler    the screen handler
+         * @param slotNumber the slot number
+         * @param button     the button value
+         * @param player     the player
+         *
+         * @return the {@link ItemStack} in the slot
+         */
         @Nullable ItemStack act(BScreenHandler handler, int slotNumber, int button, PlayerEntity player);
     }
 }

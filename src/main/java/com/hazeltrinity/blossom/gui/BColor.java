@@ -1,5 +1,8 @@
 package com.hazeltrinity.blossom.gui;
 
+/**
+ * Stores a color value. Used in rendering and (TODO) Styles
+ */
 public class BColor {
 
     // Constant Colors
@@ -198,22 +201,47 @@ public class BColor {
         return ofColorRGB(Integer.decode("0x" + rrggbb));
     }
 
+    /**
+     * Get the red component of the RGBA representation of this color.
+     *
+     * @return the red component [0,255]
+     */
     public int getRed() {
         return r;
     }
 
+    /**
+     * Get the green component of the RGBA representation of this color.
+     *
+     * @return the green component [0,255]
+     */
     public int getGreen() {
         return g;
     }
 
+    /**
+     * Get the blue component of the RGBA representation of this color.
+     *
+     * @return the blue component [0,255]
+     */
     public int getBlue() {
         return b;
     }
 
+    /**
+     * Get the alpha component of the RGBA representation of this color.
+     *
+     * @return the alpha component [0,255]
+     */
     public int getAlpha() {
         return a;
     }
 
+    /**
+     * Get the integer representation of this color
+     *
+     * @return an int in the form 0xAABBGGRR
+     */
     public int getColor() {
         return r + g << 8 + b << 16 + a << 24;
     }

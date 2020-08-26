@@ -10,23 +10,50 @@ import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
+/**
+ * A Blossom HandledScreen, renders a BDescription like {@link BScreen}
+ *
+ * @param <T> the ScreenHandler type
+ */
 public class BHandledScreen<T extends BScreenHandler> extends HandledScreen<T> implements ScreenHandlerProvider<T> {
 
     public final BDescription description;
 
     private int left, top;
 
+    /**
+     * Create a new BHandledScreen with a literal title.
+     *
+     * @param handler   the screen handler
+     * @param inventory the inventory of the player using the screen
+     * @param title     the literal title of the screen, not drawn on the screen directly.
+     */
     public BHandledScreen(T handler, PlayerInventory inventory, String title) {
         this(handler, inventory, new LiteralText(title));
     }
 
+    /**
+     * Create a new BHandledScreen with a {@link net.minecraft.text.Texts} title.
+     *
+     * @param handler   the screen handler
+     * @param inventory the inventory of the player using the screen
+     * @param title     the text title of the screen, not drawn on the screen directly.
+     */
     public BHandledScreen(T handler, PlayerInventory inventory, Text title) {
         super(handler, inventory, title);
 
         this.description = handler.description;
     }
 
-    public BHandledScreen<T> of(T handler, PlayerInventory inventory, Text title) {
+    /**
+     * Create a screen with the title inherited from the root widget's name
+     *
+     * @param handler   the screenhandler
+     * @param inventory the player inventory
+     *
+     * @return a new {@link BHandledScreen}
+     */
+    public BHandledScreen<T> of(T handler, PlayerInventory inventory) {
         if (description.root instanceof BNamedWidget) {
             return new BHandledScreen<>(handler, inventory, ((BNamedWidget) description.root).getName());
         } else {
@@ -52,7 +79,7 @@ public class BHandledScreen<T extends BScreenHandler> extends HandledScreen<T> i
         reposition(screenWidth, screenHeight);
     }
 
-    public void reposition(int width, int height) {
+    private void reposition(int width, int height) {
         description.root.invalidateCachedSize();
 
         if (description.isFullscreen()) {

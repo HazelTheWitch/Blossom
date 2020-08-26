@@ -8,11 +8,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Organizes widgets by their absolute position on the parent, either by % or constant offset.
+ * Organizes widgets by their absolute position on the parent, either by % or constant offset or both.
  */
 public class WAbsolutePanel extends BPanelWidget {
     protected List<WidgetLocation> children = new ArrayList<WidgetLocation>();
 
+    /**
+     * Add a child to the panel.
+     * <p>
+     * The placement is defined by the top left corner's position, where:
+     * <p>
+     * x = ax*width+bx;
+     * </p>
+     * and
+     * <p>
+     * y=ay*height+by
+     * </p>
+     * </p>
+     *
+     * @param widget the widget to add
+     * @param ax     the a value of the x equation
+     * @param bx     the b value of the x equation
+     * @param ay     the a value of the y equation
+     * @param by     the b value of the y equation
+     *
+     * @return the panel for chaining
+     */
     public WAbsolutePanel addChild(BWidget widget, double ax, double bx, double ay, double by) {
         children.add(new WidgetLocation(this, widget, ax, bx, ay, by));
         return this;
@@ -38,6 +59,9 @@ public class WAbsolutePanel extends BPanelWidget {
         return max.max(super.getMinimumSize());
     }
 
+    /**
+     * Represents a widget location on the panel
+     */
     protected static class WidgetLocation {
         public final WAbsolutePanel parent;
 
@@ -45,6 +69,16 @@ public class WAbsolutePanel extends BPanelWidget {
 
         public final double ax, bx, ay, by;
 
+        /**
+         * Create a new WidgetLocation
+         *
+         * @param parent the parent panel
+         * @param widget the widget
+         * @param ax     the a value of the x equation
+         * @param bx     the b value of the x equation
+         * @param ay     the a value of the y equation
+         * @param by     the b value of the y equation
+         */
         public WidgetLocation(WAbsolutePanel parent, BWidget widget, double ax, double bx, double ay, double by) {
             this.parent = parent;
             this.widget = widget;
@@ -54,6 +88,11 @@ public class WAbsolutePanel extends BPanelWidget {
             this.by = by;
         }
 
+        /**
+         * Get the {@link com.hazeltrinity.blossom.gui.widget.BWidget.ChildWidget} from this WidgetLocation
+         *
+         * @return the ChildWidget
+         */
         public ChildWidget getChild() {
             return new ChildWidget(
             widget,
@@ -62,11 +101,16 @@ public class WAbsolutePanel extends BPanelWidget {
             );
         }
 
+        /**
+         * Get how big a parent panel must be to have this widget fit, should not be modified.
+         *
+         * @return the required size.
+         */
         public Size getRequiredSize() {
-            return new Size(
-            ceil((bx + widget.getWidth()) / (1 - ax)) + parent.leftMargin + parent.rightMargin,
-            ceil((by + widget.getHeight()) / (1 - ay)) + parent.topMargin + parent.bottomMargin
-            );
+            return parent.addMargins(new Size(
+            ceil((bx + widget.getWidth()) / (1 - ax)),
+            ceil((by + widget.getHeight()) / (1 - ay))
+            ));
         }
 
         private int ceil(double x) {

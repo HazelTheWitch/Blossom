@@ -9,8 +9,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a widget in a GUI, they are organized in a tree structure.
+ */
 public abstract class BWidget {
-
     protected BackgroundPainter backgroundPainter = null;
 
     protected Size minimumSize = new Size(0, 0);
@@ -49,11 +51,17 @@ public abstract class BWidget {
     public void tick() {
     }
 
+    /**
+     * Focus this widget
+     */
     public void focus() {
         focussed = true;
         onFocus();
     }
 
+    /**
+     * Unfocus this widget
+     */
     public void unfocus() {
         focussed = false;
         onLoseFocus();
@@ -101,6 +109,14 @@ public abstract class BWidget {
         return this;
     }
 
+    /**
+     * Set the absolute minimum size of this widget
+     *
+     * @param width  the width of the widget
+     * @param height the height of the widget
+     *
+     * @return the widget for chaining
+     */
     public BWidget setMinimumSize(int width, int height) {
         return setMinimumSize(new Size(width, height));
     }
@@ -159,10 +175,20 @@ public abstract class BWidget {
         return cachedSize;
     }
 
+    /**
+     * Get the width of the widget
+     *
+     * @return the width
+     */
     public int getWidth() {
         return getSize().width;
     }
 
+    /**
+     * Get the height of the widget
+     *
+     * @return the height
+     */
     public int getHeight() {
         return getSize().height;
     }
@@ -262,20 +288,19 @@ public abstract class BWidget {
         public final int width, height;
         public final BWidget widget;
 
+        /**
+         * Create a new child widget at a position, it calculates the size
+         *
+         * @param widget the widget to place
+         * @param x      the x position
+         * @param y      the y position
+         */
         public ChildWidget(BWidget widget, int x, int y) {
-            this(widget, x, y, widget.getSize());
-        }
-
-        public ChildWidget(BWidget widget, int x, int y, Size size) {
-            this(widget, x, y, size.width, size.height);
-        }
-
-        public ChildWidget(BWidget widget, int x, int y, int width, int height) {
             this.x = x;
             this.y = y;
 
-            this.width = width;
-            this.height = height;
+            this.width = widget.getWidth();
+            this.height = widget.getHeight();
 
             this.widget = widget;
         }
@@ -288,6 +313,12 @@ public abstract class BWidget {
 
         public final int width, height;
 
+        /**
+         * Create a new size with a given width and height
+         *
+         * @param width  the width
+         * @param height the height
+         */
         public Size(int width, int height) {
             this.width = width;
             this.height = height;
@@ -305,12 +336,22 @@ public abstract class BWidget {
         }
     }
 
+    /**
+     * The result of a call to {@link BWidget#hit(int, int)}
+     */
     public static class HitResult {
 
         public final BWidget widget;
         public final int mouseX, mouseY;
 
-        public HitResult(BWidget widget, int mouseX, int mouseY) {
+        /**
+         * Create a new HitResult at a given mouse x and y
+         *
+         * @param widget the widget to hit
+         * @param mouseX the x position of the mouse relative to the widget
+         * @param mouseY the y position of the mouse relative to the widget
+         */
+        protected HitResult(BWidget widget, int mouseX, int mouseY) {
             this.widget = widget;
             this.mouseX = mouseX;
             this.mouseY = mouseY;

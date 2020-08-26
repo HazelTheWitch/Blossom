@@ -10,10 +10,11 @@ public abstract class BackgroundPainter {
     /**
      * Draws a background excluding border.
      *
-     * @param x      the inner top left corner x coordinate
-     * @param y      the inner top right corner y coordinate
-     * @param width  the inner width of the background
-     * @param height the inner height of the background
+     * @param matrices the MatrixStack to use for drawing
+     * @param x        the inner top left corner x coordinate
+     * @param y        the inner top right corner y coordinate
+     * @param width    the inner width of the background
+     * @param height   the inner height of the background
      */
     public void paintBackgroundInner(MatrixStack matrices, int x, int y, int width, int height) {
         paintBackground(matrices, x, y, width, height);
@@ -22,10 +23,11 @@ public abstract class BackgroundPainter {
     /**
      * Draws a background including border.
      *
-     * @param x      the outer top left corner x coordinate
-     * @param y      the outer top right corner y coordinate
-     * @param width  the outer width of the background
-     * @param height the outer height of the background
+     * @param matrices the MatrixStack to use for drawing
+     * @param x        the outer top left corner x coordinate
+     * @param y        the outer top right corner y coordinate
+     * @param width    the outer width of the background
+     * @param height   the outer height of the background
      */
     public abstract void paintBackground(MatrixStack matrices, int x, int y, int width, int height);
 }

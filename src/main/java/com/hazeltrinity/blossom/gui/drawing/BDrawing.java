@@ -14,6 +14,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * Helper class for rendering UI elements.
+ */
 public class BDrawing {
 
     public static final BColor TOP_LEFT_BEVEL = BColor.ofColorRGB(0x373737);
@@ -146,10 +149,32 @@ public class BDrawing {
         RenderSystem.disableBlend();
     }
 
+    /**
+     * Draws a GUI panel in the standard vanilla style.
+     *
+     * @param matrices the current MatrixStack
+     * @param x        the x coordinate of the top left of the GUI
+     * @param y        the y coordinate of the top left of the GUI
+     * @param width    the width of the GUI panel
+     * @param height   the height of the GUI panel
+     */
     public static void drawGuiPanel(MatrixStack matrices, int x, int y, int width, int height) {
         drawGuiPanel(matrices, x, y, width, height, GUI_SHADOW, GUI_PANEL, GUI_HILIGHT, GUI_OUTLINE);
     }
 
+    /**
+     * Draws a GUI panel in the standard vanilla style.
+     *
+     * @param matrices the current MatrixStack
+     * @param x        the x coordinate of the top left of the GUI
+     * @param y        the y coordinate of the top left of the GUI
+     * @param width    the width of the GUI panel
+     * @param height   the height of the GUI panel
+     * @param shadow   the shadow in the bottom right of the GUI
+     * @param panel    the main panel color
+     * @param hilight  the hilight  in the top left of the GUI
+     * @param outline  the outline surrounding the GUI
+     */
     public static void drawGuiPanel(MatrixStack matrices, int x, int y, int width, int height, BColor shadow, BColor panel, BColor hilight, BColor outline) {
 
         drawRect(matrices, x + 3, y + 3, width - 6, height - 6, panel); // Main panel area
@@ -173,14 +198,42 @@ public class BDrawing {
         drawRect(matrices, x + width - 2, y + height - 2, 1, 1, outline); // Bottomright round pixel
     }
 
+    /**
+     * Draw a panel similar to the vanilla item slot look.
+     *
+     * @param matrices the current MatrixStack
+     * @param x        the x coordinate of the top left of the slot
+     * @param y        the y coordinate of the top left of the slot
+     */
     public static void drawBeveledPanel(MatrixStack matrices, int x, int y) {
         drawBeveledPanel(matrices, x, y, 18, 18, TOP_LEFT_BEVEL, PANEL_BEVEL, BOTTOM_RIGHT_BEVEL);
     }
 
+    /**
+     * Draw a panel similar to the vanilla item slot look.
+     *
+     * @param matrices the current MatrixStack
+     * @param x        the x coordinate of the top left of the slot
+     * @param y        the y coordinate of the top left of the slot
+     * @param width    the width of the panel
+     * @param height   the height of the panel
+     */
     public static void drawBeveledPanel(MatrixStack matrices, int x, int y, int width, int height) {
         drawBeveledPanel(matrices, x, y, width, height, TOP_LEFT_BEVEL, PANEL_BEVEL, BOTTOM_RIGHT_BEVEL);
     }
 
+    /**
+     * Draw a panel similar to the vanilla item slot look.
+     *
+     * @param matrices    the current MatrixStack
+     * @param x           the x coordinate of the top left of the slot
+     * @param y           the y coordinate of the top left of the slot
+     * @param width       the width of the panel
+     * @param height      the height of the panel
+     * @param topleft     the top left color of the panel
+     * @param panel       the main panel color
+     * @param bottomright the bottom right color of the panel
+     */
     public static void drawBeveledPanel(MatrixStack matrices, int x, int y, int width, int height, BColor topleft, BColor panel, BColor bottomright) {
         drawRect(matrices, x, y, width, height, panel); // Center panel
         drawRect(matrices, x, y, width - 1, 1, topleft); // Top shadow

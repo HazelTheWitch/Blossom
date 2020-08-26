@@ -7,6 +7,9 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 
+/**
+ * A widget which has a name.
+ */
 public abstract class BNamedWidget extends BWidget {
 
     private boolean drawTitle = true;
@@ -93,6 +96,11 @@ public abstract class BNamedWidget extends BWidget {
         return this;
     }
 
+    /**
+     * Get this widget's name.
+     *
+     * @return the name
+     */
     public Text getName() {
         return name;
     }
