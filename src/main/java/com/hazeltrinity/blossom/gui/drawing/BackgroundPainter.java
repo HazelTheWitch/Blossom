@@ -1,5 +1,7 @@
 package com.hazeltrinity.blossom.gui.drawing;
 
+import net.minecraft.client.util.math.MatrixStack;
+
 /**
  * Draws the backgrounds of widgets.
  */
@@ -13,8 +15,8 @@ public abstract class BackgroundPainter {
      * @param width  the inner width of the background
      * @param height the inner height of the background
      */
-    public void paintBackgroundInner(int x, int y, int width, int height) {
-        paintBackground(x, y, width, height);
+    public void paintBackgroundInner(MatrixStack matrices, int x, int y, int width, int height) {
+        paintBackground(matrices, x, y, width, height);
     }
 
     /**
@@ -25,5 +27,5 @@ public abstract class BackgroundPainter {
      * @param width  the outer width of the background
      * @param height the outer height of the background
      */
-    public abstract void paintBackground(int x, int y, int width, int height);
+    public abstract void paintBackground(MatrixStack matrices, int x, int y, int width, int height);
 }

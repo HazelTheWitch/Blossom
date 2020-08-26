@@ -71,7 +71,11 @@ public class BHandledScreen<T extends BScreenHandler> extends HandledScreen<T> i
     @Override
     public void render(MatrixStack matrices, int mouseX, int mouseY, float partialTicks) {
         description.root.invalidateCachedSize();
-        description.root.paint(matrices, left, top, mouseX - left, mouseY - top);
+
+        matrices.push();
+        matrices.translate(left, top, 0);
+        description.root.paint(matrices, mouseX - left, mouseY - top);
+        matrices.pop();
 
         super.render(matrices, mouseX, mouseY, partialTicks);
     }

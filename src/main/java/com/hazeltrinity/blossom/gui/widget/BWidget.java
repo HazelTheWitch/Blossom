@@ -180,15 +180,13 @@ public abstract class BWidget {
      * Paint this widget
      *
      * @param matrices rendering matrices
-     * @param x        the x coordinate of the left edge of the widget
-     * @param y        the y coordinate of the left edge of the widget
      * @param mouseX   the x coordinate of the mouse relative to the widget
      * @param mouseY   the y coordinate of the mouse relative to the widget
      */
     @OverrideOnly
-    public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
+    public void paint(MatrixStack matrices, int mouseX, int mouseY) {
         if (backgroundPainter != null) {
-            backgroundPainter.paintBackgroundInner(x, y, getWidth(), getHeight());
+            backgroundPainter.paintBackgroundInner(matrices, 0, 0, getWidth(), getHeight());
         }
     }
 

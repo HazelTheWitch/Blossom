@@ -8,8 +8,10 @@ import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
 import net.minecraft.client.render.VertexFormats;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Matrix4f;
 import org.lwjgl.opengl.GL11;
 
 public class BDrawing {
@@ -62,18 +64,21 @@ public class BDrawing {
      * <p>
      * Lovingly taken from {@link https://github.com/CottonMC/LibGui/blob/7fbd5d5c81e9ea0d7cb8ec179c6ae1418ef45efc/src/main/java/io/github/cottonmc/cotton/gui/client/ScreenDrawing.java#L118}
      *
-     * @param x       the x
-     * @param y       the y
-     * @param width   the width of the rectangle
-     * @param height  the height of the rectangle
-     * @param texture the texture
-     * @param u1      u coordinate 1
-     * @param v1      v coordinate 1
-     * @param u2      u coordinate 2
-     * @param v2      v coordinate 2
-     * @param color   the color to tint the texture, alpha is included
+     * @param matrices the matrix stack to use for drawing
+     * @param x        the x
+     * @param y        the y
+     * @param width    the width of the rectangle
+     * @param height   the height of the rectangle
+     * @param texture  the texture
+     * @param u1       u coordinate 1
+     * @param v1       v coordinate 1
+     * @param u2       u coordinate 2
+     * @param v2       v coordinate 2
+     * @param color    the color to tint the texture, alpha is included
      */
-    public static void drawTexture(int x, int y, int width, int height, Identifier texture, float u1, float v1, float u2, float v2, BColor color) {
+    public static void drawTexture(MatrixStack matrices, int x, int y, int width, int height, Identifier texture, float u1, float v1, float u2, float v2, BColor color) {
+        Matrix4f matrix = matrices.peek().getModel();
+
         MinecraftClient.getInstance().getTextureManager().bindTexture(texture);
 
         if (width <= 0) width = 1;
@@ -90,16 +95,30 @@ public class BDrawing {
         RenderSystem.enableBlend();
 
         RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
+
         buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR_TEXTURE);
-        buffer.vertex(x, y + height, 0).color(r, g, b, opacity).texture(u1, v2).next();
-        buffer.vertex(x + width, y + height, 0).color(r, g, b, opacity).texture(u2, v2).next();
-        buffer.vertex(x + width, y, 0).color(r, g, b, opacity).texture(u2, v1).next();
-        buffer.vertex(x, y, 0).color(r, g, b, opacity).texture(u1, v1).next();
+        buffer.vertex(matrix, x, y + height, 0).color(r, g, b, opacity).texture(u1, v2).next();
+        buffer.vertex(matrix, x + width, y + height, 0).color(r, g, b, opacity).texture(u2, v2).next();
+        buffer.vertex(matrix, x + width, y, 0).color(r, g, b, opacity).texture(u2, v1).next();
+        buffer.vertex(matrix, x, y, 0).color(r, g, b, opacity).texture(u1, v1).next();
+
         tessellator.draw();
         RenderSystem.disableBlend();
     }
 
-    public static void drawRect(int x, int y, int width, int height, BColor color) {
+    /**
+     * Draw a flat colored rectangle.
+     *
+     * @param matrices the matrix stack to use for drawing
+     * @param x        the x coordinate of the top left of the rectangle
+     * @param y        the y coordinate of the top left of the rectangle
+     * @param width    the width of the rectangle
+     * @param height   the height of the rectangle
+     * @param color    the color of the rectangle
+     */
+    public static void drawRect(MatrixStack matrices, int x, int y, int width, int height, BColor color) {
+        Matrix4f matrix = matrices.peek().getModel();
+
         if (width <= 0)
             width = 1;
         if (height <= 0)
@@ -109,61 +128,75 @@ public class BDrawing {
         float r = color.getRed() / 255.0F;
         float g = color.getGreen() / 255.0F;
         float b = color.getBlue() / 255.0F;
+
         Tessellator tessellator = Tessellator.getInstance();
         BufferBuilder buffer = tessellator.getBuffer();
         RenderSystem.enableBlend();
         RenderSystem.disableTexture();
         RenderSystem.blendFuncSeparate(GlStateManager.SrcFactor.SRC_ALPHA, GlStateManager.DstFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SrcFactor.ONE, GlStateManager.DstFactor.ZERO);
+
         buffer.begin(GL11.GL_QUADS, VertexFormats.POSITION_COLOR);
-        buffer.vertex(x, y + height, 0.0D).color(r, g, b, a).next();
-        buffer.vertex(x + width, y + height, 0.0D).color(r, g, b, a).next();
-        buffer.vertex(x + width, y, 0.0D).color(r, g, b, a).next();
-        buffer.vertex(x, y, 0.0D).color(r, g, b, a).next();
+        buffer.vertex(matrix, x, y + height, 0.0F).color(r, g, b, a).next();
+        buffer.vertex(matrix, x + width, y + height, 0.0F).color(r, g, b, a).next();
+        buffer.vertex(matrix, x + width, y, 0.0F).color(r, g, b, a).next();
+        buffer.vertex(matrix, x, y, 0.0F).color(r, g, b, a).next();
+
         tessellator.draw();
         RenderSystem.enableTexture();
         RenderSystem.disableBlend();
     }
 
-    public static void drawGuiPanel(int x, int y, int width, int height) {
-        drawGuiPanel(x, y, width, height, GUI_SHADOW, GUI_PANEL, GUI_HILIGHT, GUI_OUTLINE);
+    public static void drawGuiPanel(MatrixStack matrices, int x, int y, int width, int height) {
+        drawGuiPanel(matrices, x, y, width, height, GUI_SHADOW, GUI_PANEL, GUI_HILIGHT, GUI_OUTLINE);
     }
 
-    public static void drawGuiPanel(int x, int y, int width, int height, BColor shadow, BColor panel, BColor hilight, BColor outline) {
+    public static void drawGuiPanel(MatrixStack matrices, int x, int y, int width, int height, BColor shadow, BColor panel, BColor hilight, BColor outline) {
 
-        drawRect(x + 3, y + 3, width - 6, height - 6, panel); // Main panel area
+        drawRect(matrices, x + 3, y + 3, width - 6, height - 6, panel); // Main panel area
 
-        drawRect(x + 2, y + 1, width - 4, 2, hilight); // Top hilight
-        drawRect(x + 2, y + height - 3, width - 4, 2, shadow); // Bottom shadow
-        drawRect(x + 1, y + 2, 2, height - 4, hilight); // Left hilight
-        drawRect(x + width - 3, y + 2, 2, height - 4, shadow); // Right shadow
-        drawRect(x + width - 3, y + 2, 1, 1, panel); // Topright non-hilight/non-shadow transition pixel
-        drawRect(x + 2, y + height - 3, 1, 1, panel); // Bottomleft non-hilight/non-shadow transition pixel
-        drawRect(x + 3, y + 3, 1, 1, hilight); // Topleft round hilight pixel
-        drawRect(x + width - 4, y + height - 4, 1, 1, shadow); // Bottomright round shadow pixel
+        drawRect(matrices, x + 2, y + 1, width - 4, 2, hilight); // Top hilight
+        drawRect(matrices, x + 2, y + height - 3, width - 4, 2, shadow); // Bottom shadow
+        drawRect(matrices, x + 1, y + 2, 2, height - 4, hilight); // Left hilight
+        drawRect(matrices, x + width - 3, y + 2, 2, height - 4, shadow); // Right shadow
+        drawRect(matrices, x + width - 3, y + 2, 1, 1, panel); // Topright non-hilight/non-shadow transition pixel
+        drawRect(matrices, x + 2, y + height - 3, 1, 1, panel); // Bottomleft non-hilight/non-shadow transition pixel
+        drawRect(matrices, x + 3, y + 3, 1, 1, hilight); // Topleft round hilight pixel
+        drawRect(matrices, x + width - 4, y + height - 4, 1, 1, shadow); // Bottomright round shadow pixel
 
-        drawRect(x + 2, y, width - 4, 1, outline); // Top outline
-        drawRect(x, y + 2, 1, height - 4, outline); // Left outline
-        drawRect(x + width - 1, y + 2, 1, height - 4, outline); // Right outline
-        drawRect(x + 2, y + height - 1, width - 4, 1, outline); // Bottom outline
-        drawRect(x + 1, y + 1, 1, 1, outline); // Topleft round pixel
-        drawRect(x + 1, y + height - 2, 1, 1, outline); // Bottomleft round pixel
-        drawRect(x + width - 2, y + 1, 1, 1, outline); // Topright round pixel
-        drawRect(x + width - 2, y + height - 2, 1, 1, outline); // Bottomright round pixel
+        drawRect(matrices, x + 2, y, width - 4, 1, outline); // Top outline
+        drawRect(matrices, x, y + 2, 1, height - 4, outline); // Left outline
+        drawRect(matrices, x + width - 1, y + 2, 1, height - 4, outline); // Right outline
+        drawRect(matrices, x + 2, y + height - 1, width - 4, 1, outline); // Bottom outline
+        drawRect(matrices, x + 1, y + 1, 1, 1, outline); // Topleft round pixel
+        drawRect(matrices, x + 1, y + height - 2, 1, 1, outline); // Bottomleft round pixel
+        drawRect(matrices, x + width - 2, y + 1, 1, 1, outline); // Topright round pixel
+        drawRect(matrices, x + width - 2, y + height - 2, 1, 1, outline); // Bottomright round pixel
     }
 
-    public static void drawBeveledPanel(int x, int y) {
-        drawBeveledPanel(x, y, 18, 18, TOP_LEFT_BEVEL, PANEL_BEVEL, BOTTOM_RIGHT_BEVEL);
+    public static void drawBeveledPanel(MatrixStack matrices, int x, int y) {
+        drawBeveledPanel(matrices, x, y, 18, 18, TOP_LEFT_BEVEL, PANEL_BEVEL, BOTTOM_RIGHT_BEVEL);
     }
 
-    public static void drawBeveledPanel(int x, int y, int width, int height) {
-        drawBeveledPanel(x, y, width, height, TOP_LEFT_BEVEL, PANEL_BEVEL, BOTTOM_RIGHT_BEVEL);
+    public static void drawBeveledPanel(MatrixStack matrices, int x, int y, int width, int height) {
+        drawBeveledPanel(matrices, x, y, width, height, TOP_LEFT_BEVEL, PANEL_BEVEL, BOTTOM_RIGHT_BEVEL);
     }
 
-    public static void drawBeveledPanel(int x, int y, int width, int height, BColor topleft, BColor panel, BColor bottomright) {
-        drawRect(x, y, width, height, panel); // Center panel
-        drawRect(x, y, width - 1, 1, topleft); // Top shadow
-        drawRect(x, y + 1, 1, height - 2, topleft); // Left shadow
-        drawRect(x + width - 1, y + 1, 1, height - 1, bottomright); // Right hilight
-        drawRect(x + 1, y + height - 1, width - 1, 1, bottomright); // Bottom hilight
+    public static void drawBeveledPanel(MatrixStack matrices, int x, int y, int width, int height, BColor topleft, BColor panel, BColor bottomright) {
+        drawRect(matrices, x, y, width, height, panel); // Center panel
+        drawRect(matrices, x, y, width - 1, 1, topleft); // Top shadow
+        drawRect(matrices, x, y + 1, 1, height - 2, topleft); // Left shadow
+        drawRect(matrices, x + width - 1, y + 1, 1, height - 1, bottomright); // Right hilight
+        drawRect(matrices, x + 1, y + height - 1, width - 1, 1, bottomright); // Bottom hilight
+    }
+
+    private static Vector4f apply(MatrixStack matrices, float x, float y) {
+        return apply(matrices, x, y, 0, 1);
+    }
+
+    private static Vector4f apply(MatrixStack matrices, float x, float y, float z, float w) {
+        Matrix4f matrix = matrices.peek().getModel();
+        Vector4f point = new Vector4f(x, y, z, w);
+        point.transform(matrix);
+        return point;
     }
 }

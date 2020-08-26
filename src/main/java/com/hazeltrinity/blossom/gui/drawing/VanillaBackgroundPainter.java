@@ -1,6 +1,7 @@
 package com.hazeltrinity.blossom.gui.drawing;
 
 import com.hazeltrinity.blossom.gui.BColor;
+import net.minecraft.client.util.math.MatrixStack;
 
 public class VanillaBackgroundPainter extends BackgroundPainter {
 
@@ -22,13 +23,13 @@ public class VanillaBackgroundPainter extends BackgroundPainter {
     }
 
     @Override
-    public void paintBackgroundInner(int x, int y, int width, int height) {
-        paintBackground(x - 3, y - 3, width + 6, height + 6);
+    public void paintBackgroundInner(MatrixStack matrices, int x, int y, int width, int height) {
+        paintBackground(matrices, x - 3, y - 3, width + 6, height + 6);
     }
 
     @Override
-    public void paintBackground(int x, int y, int width, int height) {
-        BDrawing.drawGuiPanel(x, y, width, height, shadow, panel, hilight, outline);
+    public void paintBackground(MatrixStack matrices, int x, int y, int width, int height) {
+        BDrawing.drawGuiPanel(matrices, x, y, width, height, shadow, panel, hilight, outline);
     }
 
 }

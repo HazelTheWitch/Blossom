@@ -98,11 +98,11 @@ public abstract class BNamedWidget extends BWidget {
     }
 
     @Override
-    public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
-        super.paint(matrices, x, y, mouseX, mouseY);
+    public void paint(MatrixStack matrices, int mouseX, int mouseY) {
+        super.paint(matrices, mouseX, mouseY);
 
         if (drawTitle) {
-            BDrawing.drawString(matrices, name, (int) (x + getWidth() * widgetAlignment), y + 4, textAlignment, color);
+            BDrawing.drawString(matrices, name, (int) (getWidth() * widgetAlignment), 4, textAlignment, color);
         }
     }
 

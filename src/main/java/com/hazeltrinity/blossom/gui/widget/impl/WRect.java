@@ -14,8 +14,8 @@ public class WRect extends BWidget {
     }
 
     @Override
-    public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
-        super.paint(matrices, x, y, mouseX, mouseY);
-        BDrawing.drawRect(x, y, getWidth(), getHeight(), color);
+    public void paint(MatrixStack matrices, int mouseX, int mouseY) {
+        super.paint(matrices, mouseX, mouseY);
+        BDrawing.drawRect(matrices, 0, 0, getWidth(), getHeight(), color);
     }
 }

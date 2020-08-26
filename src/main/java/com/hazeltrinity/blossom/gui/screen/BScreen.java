@@ -65,7 +65,10 @@ public class BScreen extends Screen {
 
         description.root.invalidateCachedSize();
 
-        description.root.paint(matrices, left, top, mouseX - left, mouseY - top);
+        matrices.push();
+        matrices.translate(left, top, 0);
+        description.root.paint(matrices, mouseX - left, mouseY - top);
+        matrices.pop();
 
         super.render(matrices, mouseX, mouseY, partialTicks);
     }

@@ -46,14 +46,17 @@ public abstract class BPanelWidget extends BNamedWidget implements Parent {
     }
 
     @Override
-    public void paint(MatrixStack matrices, int x, int y, int mouseX, int mouseY) {
-        super.paint(matrices, x, y, mouseX, mouseY);
+    public void paint(MatrixStack matrices, int mouseX, int mouseY) {
+        super.paint(matrices, mouseX, mouseY);
 
         List<ChildWidget> children = getChildren();
 
         if (children != null) {
             for (ChildWidget child : children) {
-                child.widget.paint(matrices, x + child.x, y + child.y, mouseX - child.x, mouseY - child.y);
+                matrices.push();
+                matrices.translate(child.x, child.y, 0);
+                child.widget.paint(matrices, mouseX - child.x, mouseY - child.y);
+                matrices.pop();
             }
         }
     }
