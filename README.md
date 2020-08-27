@@ -8,10 +8,11 @@ Blossom is a library mod, mainly for personal use, which allows you to group ite
 Further it allows you to make custom GUIs, similar to [LibGui](https://github.com/CottonMC/LibGui), with the main draw to Blossom being, in the future having "Styles" similar to css to customize your entire GUI at runtime easily.
 
 ## Features
- - Initialization Package
-   - `BMod` for handling logging, initialization, and identifiers.
-   - `BGroup` to handle all registration of blocks, items, block entities, etc.
-   - `BModInitializer` subclass to automatically initialize everything registered to the `BMod` instance.
+ - ~~Initialization Package~~
+   - ~~BMod for handling logging, initialization, and identifiers.~~
+   - ~~BGroup to handle all registration of blocks, items, block entities, etc.~~
+   - ~~BModInitializer subclass to automatically initialize everything registered to the BMod instance.~~
+*Shelved*
  - GUI Package
    - Widget based GUI design.
      - `Panel` widgets structure the GUI.
