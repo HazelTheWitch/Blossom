@@ -20,7 +20,7 @@ public class TestBlockEntity extends BlockEntity implements NamedScreenHandlerFa
     private DefaultedList<ItemStack> items = DefaultedList.ofSize(1, ItemStack.EMPTY);
 
     public TestBlockEntity() {
-        super(BlossomTestMod.TestServerScreen.getBlockEntityType());
+        super(BlossomTestMod.SSBLOCK_BLOCK_ENTITY);
     }
 
     @Override

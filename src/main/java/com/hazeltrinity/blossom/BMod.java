@@ -1,20 +1,14 @@
 package com.hazeltrinity.blossom;
 
-import com.hazeltrinity.blossom.init.BInitializable;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Represents a Blossom Mod. Handles distribution of initialization hooks.
  */
 public class BMod {
-    private final List<BInitializable> initializables;
-
     private static final Logger LOGGER = LogManager.getLogger();
 
     public final String name;
@@ -29,63 +23,6 @@ public class BMod {
     public BMod(String name, String id) {
         this.name = name;
         this.id = id;
-
-        initializables = new ArrayList<BInitializable>();
-    }
-
-    // REGISTRATION
-
-    /**
-     * Registers an initializable to this mod.
-     * <p>
-     * This initializable will be initialized when the mod is initialized.
-     *
-     * @param initializable the intializable to add to the mod.
-     * @param <T>           the type of Initializable for chaining,
-     *
-     * @return the initializable for fluent chaining
-     *
-     * @throws IllegalStateException if the initializable has already been registered
-     */
-    public <T extends BInitializable> T register(T initializable) throws IllegalStateException {
-        initializables.add(initializable);
-        initializable.setMod(this);
-        return initializable;
-    }
-
-    // INITIALIZATION
-
-    public void onInitialize() {
-        info("+++ Initializing Main +++");
-
-        for (BInitializable initializable : initializables) {
-            initializable.onInitialize();
-        }
-    }
-
-    public void onInitializeClient() {
-        info("+++ Initializing Client +++");
-
-        for (BInitializable initializable : initializables) {
-            initializable.onInitializeClient();
-        }
-    }
-
-    public void onInitializeServer() {
-        info("+++ Initializing Server +++");
-
-        for (BInitializable initializable : initializables) {
-            initializable.onInitializeServer();
-        }
-
-    }
-
-    public void onPreLaunch() {
-        info("+++ Pre-Launching +++");
-
-        for (BInitializable initializable : initializables) {
-            initializable.onPreLaunch();
-        }
     }
 
     // HELPER METHODS
