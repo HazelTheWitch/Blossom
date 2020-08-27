@@ -3,6 +3,8 @@ package com.hazeltrinity.blossom.gui.widget.impl;
 import com.hazeltrinity.blossom.gui.BColor;
 import com.hazeltrinity.blossom.gui.drawing.BDrawing;
 import com.hazeltrinity.blossom.gui.widget.BWidget;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
@@ -23,6 +25,7 @@ public class WRect extends BWidget {
         return this;
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void paint(MatrixStack matrices, int mouseX, int mouseY) {
         super.paint(matrices, mouseX, mouseY);

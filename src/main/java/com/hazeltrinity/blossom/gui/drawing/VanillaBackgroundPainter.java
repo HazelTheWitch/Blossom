@@ -1,11 +1,14 @@
 package com.hazeltrinity.blossom.gui.drawing;
 
 import com.hazeltrinity.blossom.gui.BColor;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * A background painter that looks like vanilla GUI
  */
+@Environment(EnvType.CLIENT)
 public class VanillaBackgroundPainter extends BackgroundPainter {
     public final BColor shadow, panel, hilight, outline;
 

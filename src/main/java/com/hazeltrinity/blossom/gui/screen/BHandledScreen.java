@@ -2,6 +2,8 @@ package com.hazeltrinity.blossom.gui.screen;
 
 import com.hazeltrinity.blossom.gui.widget.BNamedWidget;
 import com.hazeltrinity.blossom.gui.widget.BWidget.Size;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.gui.screen.ingame.ScreenHandlerProvider;
@@ -15,6 +17,7 @@ import net.minecraft.text.Text;
  *
  * @param <T> the ScreenHandler type
  */
+@Environment(EnvType.CLIENT)
 public class BHandledScreen<T extends BScreenHandler> extends HandledScreen<T> implements ScreenHandlerProvider<T> {
 
     public final BDescription description;

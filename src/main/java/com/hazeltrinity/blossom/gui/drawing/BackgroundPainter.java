@@ -1,10 +1,13 @@
 package com.hazeltrinity.blossom.gui.drawing;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
 
 /**
  * Draws the backgrounds of widgets.
  */
+@Environment(EnvType.CLIENT)
 public abstract class BackgroundPainter {
 
     /**

@@ -1,5 +1,7 @@
 package com.hazeltrinity.blossom.gui.widget;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.List;
@@ -77,6 +79,7 @@ public abstract class BPanelWidget extends BNamedWidget implements Parent {
         }
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void paint(MatrixStack matrices, int mouseX, int mouseY) {
         super.paint(matrices, mouseX, mouseY);

@@ -2,6 +2,8 @@ package com.hazeltrinity.blossom.gui.widget;
 
 import com.hazeltrinity.blossom.gui.BColor;
 import com.hazeltrinity.blossom.gui.drawing.BDrawing;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.text.LiteralText;
@@ -105,6 +107,7 @@ public abstract class BNamedWidget extends BWidget {
         return name;
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void paint(MatrixStack matrices, int mouseX, int mouseY) {
         super.paint(matrices, mouseX, mouseY);
@@ -114,6 +117,7 @@ public abstract class BNamedWidget extends BWidget {
         }
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public Size getMinimumSize() {
         Size size = new Size(0, 0);

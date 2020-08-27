@@ -3,6 +3,8 @@ package com.hazeltrinity.blossom.gui.drawing;
 import com.hazeltrinity.blossom.gui.BColor;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.BufferBuilder;
 import net.minecraft.client.render.Tessellator;
@@ -17,6 +19,7 @@ import org.lwjgl.opengl.GL11;
 /**
  * Helper class for rendering UI elements.
  */
+@Environment(EnvType.CLIENT)
 public class BDrawing {
 
     public static final BColor TOP_LEFT_BEVEL = BColor.ofColorRGB(0x373737);

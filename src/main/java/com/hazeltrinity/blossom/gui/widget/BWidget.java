@@ -2,6 +2,8 @@ package com.hazeltrinity.blossom.gui.widget;
 
 import com.hazeltrinity.blossom.gui.drawing.BackgroundPainter;
 import com.hazeltrinity.blossom.gui.screen.BDescription;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.util.math.MatrixStack;
 import org.jetbrains.annotations.ApiStatus.OverrideOnly;
 import org.jetbrains.annotations.Nullable;
@@ -13,11 +15,12 @@ import java.util.List;
  * Represents a widget in a GUI, they are organized in a tree structure.
  */
 public abstract class BWidget {
+    @Environment(EnvType.CLIENT)
     protected BackgroundPainter backgroundPainter = null;
 
     protected Size minimumSize = new Size(0, 0);
     protected boolean focusable = false;
-    protected @Nullable BDescription description;
+    protected BDescription description;
     private Size cachedSize = null;
     private boolean focussed = false;
 
@@ -83,6 +86,7 @@ public abstract class BWidget {
      *
      * @return this widget for chaining
      */
+    @Environment(EnvType.CLIENT)
     public BWidget setBackgroundPainter(BackgroundPainter painter) {
         this.backgroundPainter = painter;
         return this;
@@ -209,6 +213,7 @@ public abstract class BWidget {
      * @param mouseX   the x coordinate of the mouse relative to the widget
      * @param mouseY   the y coordinate of the mouse relative to the widget
      */
+    @Environment(EnvType.CLIENT)
     @OverrideOnly
     public void paint(MatrixStack matrices, int mouseX, int mouseY) {
         if (backgroundPainter != null) {

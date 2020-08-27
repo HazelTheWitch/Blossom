@@ -2,6 +2,8 @@ package com.hazeltrinity.blossom.gui.screen;
 
 import com.hazeltrinity.blossom.gui.widget.BNamedWidget;
 import com.hazeltrinity.blossom.gui.widget.BWidget.Size;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.math.MatrixStack;
@@ -11,6 +13,7 @@ import net.minecraft.text.Text;
 /**
  * Represents a client sided screen. Can not include any item slots, or anything to communicate with the server
  */
+@Environment(EnvType.CLIENT)
 public class BScreen extends Screen {
 
     public final BDescription description;
